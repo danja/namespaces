@@ -1,0 +1,31 @@
+@prefix : <http://purl.org/stuff/semem/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/example/> .
+
+# Example Instance
+ex:paper123 a :Corpuscle ;
+  rdfs:label "Attention Is All You Need" ;
+  dc:description "Seminal paper introducing transformer architecture for neural networks" ;
+  dc:identifier "doi:10.48550/arXiv.1706.03762" ;
+  dc:source <https://arxiv.org/abs/1706.03762> ;
+  :hasEmbedding ex:embedding123 ;
+  :hasSummary ex:summary123 ;
+  :hasAnalysis ex:analysis123 .
+
+ex:embedding123 a :Embedding ;
+  :modelName "text-embedding-ada-002" ;
+  :vectorEncoding "0.23,-0.54,0.12,...,0.88"^^xsd:string .
+
+ex:summary123 a :Summary ;
+  :summaryLevel "short" ;
+  :summaryContent "Introduces transformer architecture using self-attention mechanisms, eliminating recurrence and convolutions." .
+
+ex:analysis123 a :AnalysisResult ;
+  :keywordList "transformer, attention mechanism, neural networks" ;
+  :mentionedPaper "doi:10.3115/1073083.1073135",
+                  "doi:10.1145/1390156.1390179" .

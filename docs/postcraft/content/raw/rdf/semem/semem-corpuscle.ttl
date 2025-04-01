@@ -1,0 +1,76 @@
+@prefix : <http://purl.org/stuff/semem/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/example/> .
+
+: a owl:Ontology ;
+  rdfs:label "Corpuscle part of Semem Ontology" ;
+  rdfs:comment "An ontology for describing information entities in a corpus." .
+
+# Classes
+:Corpuscle a owl:Class ;
+  rdfs:label "Corpuscle" ;
+  rdfs:comment "A resource representing an information entity in a corpus" ;
+  rdfs:subClassOf dc:BibliographicResource .
+
+:Embedding a owl:Class ;
+  rdfs:label "Embedding" ;
+  rdfs:comment "Vector representation of a corpuscle" .
+
+:Summary a owl:Class ;
+  rdfs:label "Summary" ;
+  rdfs:comment "Textual summary of a corpuscle" .
+
+:AnalysisResult a owl:Class ;
+  rdfs:label "Analysis Result" ;
+  rdfs:comment "Result of computational analysis on a corpuscle" .
+
+# Properties
+:hasEmbedding a owl:ObjectProperty ;
+  rdfs:label "has embedding" ;
+  rdfs:domain :Corpuscle ;
+  rdfs:range :Embedding .
+
+:hasSummary a owl:ObjectProperty ;
+  rdfs:label "has summary" ;
+  rdfs:domain :Corpuscle ;
+  rdfs:range :Summary .
+
+:hasAnalysis a owl:ObjectProperty ;
+  rdfs:label "has analysis" ;
+  rdfs:domain :Corpuscle ;
+  rdfs:range :AnalysisResult .
+
+:modelName a owl:DatatypeProperty ;
+  rdfs:label "model name" ;
+  rdfs:domain :Embedding ;
+  rdfs:range xsd:string .
+
+:vectorEncoding a owl:DatatypeProperty ;
+  rdfs:label "vector encoding" ;
+  rdfs:domain :Embedding ;
+  rdfs:range xsd:string .
+
+:summaryLevel a owl:DatatypeProperty ;
+  rdfs:label "summary level" ;
+  rdfs:domain :Summary ;
+  rdfs:range xsd:string .
+
+:summaryContent a owl:DatatypeProperty ;
+  rdfs:label "summary content" ;
+  rdfs:domain :Summary ;
+  rdfs:range xsd:string .
+
+:keywordList a owl:DatatypeProperty ;
+  rdfs:label "keyword list" ;
+  rdfs:domain :AnalysisResult ;
+  rdfs:range xsd:string .
+
+:mentionedPaper a owl:DatatypeProperty ;
+  rdfs:label "mentioned paper" ;
+  rdfs:domain :AnalysisResult ;
+  rdfs:range xsd:anyURI .
