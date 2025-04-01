@@ -1,0 +1,59 @@
+classDiagram
+    class ZoomableComponent {
+        +hasAbstractionLevel()
+        +hasParentComponent()
+        +hasChildComponent()
+    }
+    
+    class CodeComponent {
+        +hasLanguage: string
+        +hasComplexity: integer
+        +hasDependency()
+    }
+    
+    class CodeRepository
+    class Module
+    class Class
+    class Method
+    
+    class DomainSpecialization {
+        +specializesAbstractionLevel()
+    }
+    
+    class AbstractionLevels {
+        +OverviewLevel
+        +ContextLevel
+        +StructuralLevel
+        +MechanismLevel
+        +ImplementationLevel
+    }
+    
+    class CodeSpecializations {
+        +SystemArchitectureLevel
+        +ModuleInteractionLevel
+        +ClassDesignLevel
+        +AlgorithmLevel
+        +ImplementationDetailLevel
+    }
+    
+    ZoomableComponent <|-- CodeComponent
+    CodeComponent <|-- CodeRepository
+    CodeComponent <|-- Module
+    CodeComponent <|-- Class
+    CodeComponent <|-- Method
+    
+    DomainSpecialization <|-- CodeSpecializations
+    
+    Module --> Module: hasDependency
+    Class --> Class: hasDependency
+    Method --> Method: hasDependency
+    
+    CodeRepository --> Module: hasChildComponent
+    Module --> Class: hasChildComponent
+    Class --> Method: hasChildComponent
+    
+    CodeComponent --> AbstractionLevels: hasAbstractionLevel
+    
+    CodeSpecializations --> AbstractionLevels: specializesAbstractionLevel
+    
+    CodeSpecializations ..> CodeComponent: appliesTo

@@ -1,0 +1,109 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix zoom: <http://purl.org/zoom/core#> .
+@prefix zoom-code: <http://purl.org/zoom/code#> .
+
+zoom-code:
+    a owl:Ontology ;
+    rdfs:label "Code Domain Zoom Levels" ;
+    rdfs:comment "Domain-specific zoom levels for code components." ;
+    owl:imports zoom: .
+
+# Code domain specific classes
+zoom-code:CodeComponent 
+    a owl:Class ;
+    rdfs:subClassOf zoom:ZoomableComponent ;
+    rdfs:label "Code Component" ;
+    rdfs:comment "A code-based component that can be viewed at different abstraction levels." .
+
+zoom-code:CodeRepository 
+    a owl:Class ;
+    rdfs:subClassOf zoom-code:CodeComponent ;
+    rdfs:label "Code Repository" ;
+    rdfs:comment "A collection of code components under version control." .
+
+zoom-code:Module 
+    a owl:Class ;
+    rdfs:subClassOf zoom-code:CodeComponent ;
+    rdfs:label "Module" ;
+    rdfs:comment "A modular unit of code that can be independently developed and tested." .
+
+zoom-code:Class 
+    a owl:Class ;
+    rdfs:subClassOf zoom-code:CodeComponent ;
+    rdfs:label "Class" ;
+    rdfs:comment "A class in object-oriented programming." .
+
+zoom-code:Method 
+    a owl:Class ;
+    rdfs:subClassOf zoom-code:CodeComponent ;
+    rdfs:label "Method" ;
+    rdfs:comment "A method or function within a class or module." .
+
+# Code-specific properties
+zoom-code:hasLanguage 
+    a owl:DatatypeProperty ;
+    rdfs:label "has language" ;
+    rdfs:comment "Indicates the programming language of a code component." ;
+    rdfs:domain zoom-code:CodeComponent ;
+    rdfs:range rdfs:Literal .
+
+zoom-code:hasComplexity 
+    a owl:DatatypeProperty ;
+    rdfs:label "has complexity" ;
+    rdfs:comment "Indicates the complexity level of code components." ;
+    rdfs:domain zoom-code:CodeComponent ;
+    rdfs:range xsd:integer .
+
+zoom-code:hasDependency 
+    a owl:ObjectProperty ;
+    rdfs:label "has dependency" ;
+    rdfs:comment "Indicates that one code component depends on another." ;
+    rdfs:domain zoom-code:CodeComponent ;
+    rdfs:range zoom-code:CodeComponent .
+
+# Code-specific domain specializations
+zoom-code:SystemArchitectureLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "System Architecture Level" ;
+    skos:prefLabel "System Architecture Level" ;
+    skos:definition "Overview of system-wide architecture and components." ;
+    zoom:specializesAbstractionLevel zoom:OverviewLevel .
+
+zoom-code:ModuleInteractionLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Module Interaction Level" ;
+    skos:prefLabel "Module Interaction Level" ;
+    skos:definition "Interactions between code modules and components." ;
+    zoom:specializesAbstractionLevel zoom:ContextLevel .
+
+zoom-code:ClassDesignLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Class Design Level" ;
+    skos:prefLabel "Class Design Level" ;
+    skos:definition "Class structures and relationships." ;
+    zoom:specializesAbstractionLevel zoom:StructuralLevel .
+
+zoom-code:AlgorithmLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Algorithm Level" ;
+    skos:prefLabel "Algorithm Level" ;
+    skos:definition "Algorithms and data structures." ;
+    zoom:specializesAbstractionLevel zoom:MechanismLevel .
+
+zoom-code:ImplementationDetailLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Implementation Detail Level" ;
+    skos:prefLabel "Implementation Detail Level" ;
+    skos:definition "Code-level implementation details." ;
+    zoom:specializesAbstractionLevel zoom:ImplementationLevel .
+
+# Add to SKOS collections
+zoom:OverviewLevelSpecializations skos:member zoom-code:SystemArchitectureLevel .
+zoom:ContextLevelSpecializations skos:member zoom-code:ModuleInteractionLevel .
+zoom:StructuralLevelSpecializations skos:member zoom-code:ClassDesignLevel .
+zoom:MechanismLevelSpecializations skos:member zoom-code:AlgorithmLevel .
+zoom:ImplementationLevelSpecializations skos:member zoom-code:ImplementationDetailLevel .

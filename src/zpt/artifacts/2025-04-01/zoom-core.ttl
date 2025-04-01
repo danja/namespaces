@@ -1,0 +1,132 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix zoom: <http://purl.org/zoom/core#> .
+
+zoom:
+    a owl:Ontology ;
+    dcterms:title "Zoom Level Ontology" ;
+    dcterms:description "Hybrid OWL/SKOS vocabulary for describing abstraction levels in project components" ;
+    dcterms:created "2025-04-01"^^xsd:date ;
+    owl:versionInfo "0.1" .
+
+# Core OWL classes
+zoom:ZoomableComponent 
+    a owl:Class ;
+    rdfs:label "Zoomable Component" ;
+    rdfs:comment "A component that can be viewed at different abstraction levels." .
+
+zoom:DomainSpecialization 
+    a owl:Class ;
+    rdfs:label "Domain Specialization" ;
+    rdfs:comment "A domain-specific extension of abstraction levels." .
+
+# Core OWL properties
+zoom:hasAbstractionLevel 
+    a owl:ObjectProperty ;
+    rdfs:label "has abstraction level" ;
+    rdfs:comment "Relates a component to its abstraction level." ;
+    rdfs:domain zoom:ZoomableComponent ;
+    rdfs:range skos:Concept .
+
+zoom:hasParentComponent 
+    a owl:ObjectProperty ;
+    rdfs:label "has parent component" ;
+    rdfs:comment "Relates a component to its parent component." ;
+    rdfs:domain zoom:ZoomableComponent ;
+    rdfs:range zoom:ZoomableComponent .
+
+zoom:hasChildComponent 
+    a owl:ObjectProperty ;
+    rdfs:label "has child component" ;
+    rdfs:comment "Relates a component to its child components." ;
+    rdfs:domain zoom:ZoomableComponent ;
+    rdfs:range zoom:ZoomableComponent ;
+    owl:inverseOf zoom:hasParentComponent .
+
+zoom:specializesAbstractionLevel 
+    a owl:ObjectProperty ;
+    rdfs:label "specializes abstraction level" ;
+    rdfs:comment "Relates a domain-specific abstraction level to its general abstraction level." ;
+    rdfs:domain zoom:DomainSpecialization ;
+    rdfs:range skos:Concept .
+
+# Abstraction levels as SKOS concept scheme
+zoom:AbstractionLevelScheme 
+    a skos:ConceptScheme ;
+    skos:prefLabel "Abstraction Levels" ;
+    dcterms:description "Hierarchical scheme of abstraction levels from overview to implementation." .
+
+# The five primary abstraction levels as SKOS concepts
+zoom:OverviewLevel 
+    a skos:Concept ;
+    skos:inScheme zoom:AbstractionLevelScheme ;
+    skos:topConceptOf zoom:AbstractionLevelScheme ;
+    skos:prefLabel "Overview Level" ;
+    skos:definition "Highest abstraction level providing a conceptual overview." ;
+    skos:notation "1" ;
+    skos:narrower zoom:ContextLevel .
+
+zoom:ContextLevel 
+    a skos:Concept ;
+    skos:inScheme zoom:AbstractionLevelScheme ;
+    skos:prefLabel "Context Level" ;
+    skos:definition "High-level context showing component relationships." ;
+    skos:notation "2" ;
+    skos:broader zoom:OverviewLevel ;
+    skos:narrower zoom:StructuralLevel .
+
+zoom:StructuralLevel 
+    a skos:Concept ;
+    skos:inScheme zoom:AbstractionLevelScheme ;
+    skos:prefLabel "Structural Level" ;
+    skos:definition "Mid-level abstraction showing internal structure." ;
+    skos:notation "3" ;
+    skos:broader zoom:ContextLevel ;
+    skos:narrower zoom:MechanismLevel .
+
+zoom:MechanismLevel 
+    a skos:Concept ;
+    skos:inScheme zoom:AbstractionLevelScheme ;
+    skos:prefLabel "Mechanism Level" ;
+    skos:definition "Detailed mechanisms and processes." ;
+    skos:notation "4" ;
+    skos:broader zoom:StructuralLevel ;
+    skos:narrower zoom:ImplementationLevel .
+
+zoom:ImplementationLevel 
+    a skos:Concept ;
+    skos:inScheme zoom:AbstractionLevelScheme ;
+    skos:prefLabel "Implementation Level" ;
+    skos:definition "Lowest abstraction level with implementation details." ;
+    skos:notation "5" ;
+    skos:broader zoom:MechanismLevel .
+
+# Collections for cross-domain organization
+zoom:OverviewLevelSpecializations 
+    a skos:Collection ;
+    skos:prefLabel "Overview Level Specializations" ;
+    dcterms:description "Collection of domain-specific specializations of the Overview abstraction level." .
+
+zoom:ContextLevelSpecializations 
+    a skos:Collection ;
+    skos:prefLabel "Context Level Specializations" ;
+    dcterms:description "Collection of domain-specific specializations of the Context abstraction level." .
+
+zoom:StructuralLevelSpecializations 
+    a skos:Collection ;
+    skos:prefLabel "Structural Level Specializations" ;
+    dcterms:description "Collection of domain-specific specializations of the Structural abstraction level." .
+
+zoom:MechanismLevelSpecializations 
+    a skos:Collection ;
+    skos:prefLabel "Mechanism Level Specializations" ;
+    dcterms:description "Collection of domain-specific specializations of the Mechanism abstraction level." .
+
+zoom:ImplementationLevelSpecializations 
+    a skos:Collection ;
+    skos:prefLabel "Implementation Level Specializations" ;
+    dcterms:description "Collection of domain-specific specializations of the Implementation abstraction level." .

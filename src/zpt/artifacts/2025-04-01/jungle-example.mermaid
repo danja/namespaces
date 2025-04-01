@@ -1,0 +1,70 @@
+classDiagram
+    class ZoomableComponent {
+        +hasAbstractionLevel()
+        +hasParentComponent()
+        +hasChildComponent()
+    }
+    
+    class AgriculturalArea {
+        +hasArea: decimal
+        +hasSoilType: string
+    }
+    
+    class LandPreparationTask {
+        +requiresTool()
+    }
+    
+    class Tool {
+        +name: string
+    }
+    
+    class AbstractionLevels {
+        +OverviewLevel
+        +ContextLevel
+        +StructuralLevel
+        +MechanismLevel
+        +ImplementationLevel
+    }
+    
+    class AgriSpecializations {
+        +ProjectVisionLevel
+        +SiteAssessmentLevel
+        +LandPreparationPlanLevel
+        +ClearingTechniquesLevel
+        +DailyTasksLevel
+    }
+    
+    class JungleClearingInstance {
+        +JungleClearingProject
+        +ProjectVision
+        +SiteAssessment
+        +LandPreparationPlan
+        +ClearingTechniques
+        +DailyTasks
+    }
+    
+    ZoomableComponent <|-- AgriculturalArea
+    ZoomableComponent <|-- LandPreparationTask
+    
+    AgriSpecializations --> AbstractionLevels: specializesAbstractionLevel
+    
+    JungleClearingInstance --> AbstractionLevels: hasAbstractionLevel
+    JungleClearingInstance --> AgriSpecializations: hasAbstractionLevel
+    
+    JungleClearingProject --|> AgriculturalArea
+    ProjectVision --|> AgriculturalArea
+    SiteAssessment --|> AgriculturalArea
+    LandPreparationPlan --|> AgriculturalArea
+    ClearingTechniques --|> LandPreparationTask
+    DailyTasks --|> LandPreparationTask
+    
+    JungleClearingProject --> ProjectVision: hasChildComponent
+    ProjectVision --> SiteAssessment: hasChildComponent
+    SiteAssessment --> LandPreparationPlan: hasChildComponent
+    LandPreparationPlan --> ClearingTechniques: hasChildComponent
+    ClearingTechniques --> DailyTasks: hasChildComponent
+    
+    DailyTasks --> Tool: requiresTool
+    Tool <|-- Machete
+    Tool <|-- Chainsaw
+    Tool <|-- Rake

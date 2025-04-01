@@ -1,0 +1,163 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix zoom: <http://purl.org/zoom/core#> .
+@prefix zoom-agri: <http://purl.org/zoom/agriculture#> .
+@prefix ex: <http://example.org/jungle-clearing#> .
+
+# Define the agriculture domain specialization
+zoom-agri:
+    a owl:Ontology ;
+    rdfs:label "Agriculture Domain Zoom Levels" ;
+    rdfs:comment "Domain-specific zoom levels for agricultural projects." ;
+    owl:imports zoom: .
+
+# Agriculture domain specific classes
+zoom-agri:AgriculturalArea 
+    a owl:Class ;
+    rdfs:subClassOf zoom:ZoomableComponent ;
+    rdfs:label "Agricultural Area" ;
+    rdfs:comment "A land area used for agricultural purposes." .
+
+zoom-agri:LandPreparationTask 
+    a owl:Class ;
+    rdfs:subClassOf zoom:ZoomableComponent ;
+    rdfs:label "Land Preparation Task" ;
+    rdfs:comment "A task related to preparing land for cultivation." .
+
+# Agriculture domain specific properties
+zoom-agri:hasArea 
+    a owl:DatatypeProperty ;
+    rdfs:label "has area" ;
+    rdfs:comment "The size of an agricultural area in square meters." ;
+    rdfs:domain zoom-agri:AgriculturalArea ;
+    rdfs:range xsd:decimal .
+
+zoom-agri:hasSoilType 
+    a owl:DatatypeProperty ;
+    rdfs:label "has soil type" ;
+    rdfs:comment "The type of soil in an agricultural area." ;
+    rdfs:domain zoom-agri:AgriculturalArea ;
+    rdfs:range rdfs:Literal .
+
+zoom-agri:requiresTool 
+    a owl:ObjectProperty ;
+    rdfs:label "requires tool" ;
+    rdfs:comment "A tool required to complete a land preparation task." ;
+    rdfs:domain zoom-agri:LandPreparationTask ;
+    rdfs:range zoom-agri:Tool .
+
+zoom-agri:Tool 
+    a owl:Class ;
+    rdfs:label "Tool" ;
+    rdfs:comment "A tool used in agricultural tasks." .
+
+# Agricultural domain abstraction levels
+zoom-agri:ProjectVisionLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Project Vision Level" ;
+    skos:prefLabel "Project Vision Level" ;
+    skos:definition "Top-level vision of the agricultural project goals." ;
+    zoom:specializesAbstractionLevel zoom:OverviewLevel .
+
+zoom-agri:SiteAssessmentLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Site Assessment Level" ;
+    skos:prefLabel "Site Assessment Level" ;
+    skos:definition "Assessment of the site and its context for agricultural use." ;
+    zoom:specializesAbstractionLevel zoom:ContextLevel .
+
+zoom-agri:LandPreparationPlanLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Land Preparation Plan Level" ;
+    skos:prefLabel "Land Preparation Plan Level" ;
+    skos:definition "Structured plan for land preparation activities." ;
+    zoom:specializesAbstractionLevel zoom:StructuralLevel .
+
+zoom-agri:ClearingTechniquesLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Clearing Techniques Level" ;
+    skos:prefLabel "Clearing Techniques Level" ;
+    skos:definition "Specific techniques for clearing and preparing land." ;
+    zoom:specializesAbstractionLevel zoom:MechanismLevel .
+
+zoom-agri:DailyTasksLevel 
+    a zoom:DomainSpecialization, skos:Concept ;
+    rdfs:label "Daily Tasks Level" ;
+    skos:prefLabel "Daily Tasks Level" ;
+    skos:definition "Day-to-day implementation tasks for land preparation." ;
+    zoom:specializesAbstractionLevel zoom:ImplementationLevel .
+
+# Add to SKOS collections
+zoom:OverviewLevelSpecializations skos:member zoom-agri:ProjectVisionLevel .
+zoom:ContextLevelSpecializations skos:member zoom-agri:SiteAssessmentLevel .
+zoom:StructuralLevelSpecializations skos:member zoom-agri:LandPreparationPlanLevel .
+zoom:MechanismLevelSpecializations skos:member zoom-agri:ClearingTechniquesLevel .
+zoom:ImplementationLevelSpecializations skos:member zoom-agri:DailyTasksLevel .
+
+# Example instance - Jungle Clearing Project
+ex:JungleClearingProject 
+    a zoom-agri:AgriculturalArea ;
+    rdfs:label "Jungle Clearing for Vegetable Garden" ;
+    zoom-agri:hasArea "5000"^^xsd:decimal ; # 5000 square meters
+    zoom-agri:hasSoilType "Tropical forest soil" ;
+    zoom:hasAbstractionLevel zoom:OverviewLevel .
+
+# Level 1: Project Vision (Overview)
+ex:ProjectVision 
+    a zoom-agri:AgriculturalArea ;
+    rdfs:label "Vegetable Garden Vision" ;
+    rdfs:comment "Convert jungle area into a productive vegetable garden within 3 months" ;
+    zoom:hasAbstractionLevel zoom-agri:ProjectVisionLevel ;
+    zoom:hasParentComponent ex:JungleClearingProject .
+
+# Level 2: Site Assessment (Context)
+ex:SiteAssessment 
+    a zoom-agri:AgriculturalArea ;
+    rdfs:label "Jungle Site Assessment" ;
+    rdfs:comment "5000m² tropical jungle with dense vegetation, variable terrain, seasonal rainfall" ;
+    zoom:hasAbstractionLevel zoom-agri:SiteAssessmentLevel ;
+    zoom:hasParentComponent ex:ProjectVision ;
+    dcterms:description "The site contains large trees, undergrowth, and potential wildlife habitats that need careful consideration." .
+
+# Level 3: Land Preparation Plan (Structural)
+ex:LandPreparationPlan 
+    a zoom-agri:AgriculturalArea ;
+    rdfs:label "Land Preparation Plan" ;
+    rdfs:comment "Systematic clearing plan: 1) Survey & mark areas, 2) Clear undergrowth, 3) Remove trees, 4) Clear debris, 5) Till soil" ;
+    zoom:hasAbstractionLevel zoom-agri:LandPreparationPlanLevel ;
+    zoom:hasParentComponent ex:SiteAssessment .
+
+# Level 4: Clearing Techniques (Mechanism)
+ex:ClearingTechniques 
+    a zoom-agri:LandPreparationTask ;
+    rdfs:label "Jungle Clearing Techniques" ;
+    rdfs:comment "Specific techniques for each phase: manual cutting, chainsaw use for trees, controlled burning for brush, composting methods" ;
+    zoom:hasAbstractionLevel zoom-agri:ClearingTechniquesLevel ;
+    zoom:hasParentComponent ex:LandPreparationPlan .
+
+# Level 5: Daily Tasks (Implementation)
+ex:DailyTasks 
+    a zoom-agri:LandPreparationTask ;
+    rdfs:label "Daily Clearing Tasks" ;
+    rdfs:comment "Day 1: Mark plot boundaries with stakes; Day 2: Clear 500m² of undergrowth using machetes; Day 3: Process removed vegetation for compost..." ;
+    zoom:hasAbstractionLevel zoom-agri:DailyTasksLevel ;
+    zoom:hasParentComponent ex:ClearingTechniques .
+
+# Tools needed
+ex:Machete a zoom-agri:Tool ;
+    rdfs:label "Machete" .
+
+ex:Chainsaw a zoom-agri:Tool ;
+    rdfs:label "Chainsaw" .
+
+ex:Rake a zoom-agri:Tool ;
+    rdfs:label "Rake" .
+
+# Connect tasks to tools
+ex:DailyTasks zoom-agri:requiresTool ex:Machete ;
+    zoom-agri:requiresTool ex:Chainsaw ;
+    zoom-agri:requiresTool ex:Rake .

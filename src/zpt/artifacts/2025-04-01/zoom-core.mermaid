@@ -1,0 +1,50 @@
+classDiagram
+    class ZoomableComponent {
+        +hasAbstractionLevel()
+        +hasParentComponent()
+        +hasChildComponent()
+    }
+    
+    class DomainSpecialization {
+        +specializesAbstractionLevel()
+    }
+    
+    class ConceptScheme {
+        +AbstractionLevelScheme
+    }
+    
+    class Concept {
+        +prefLabel: string
+        +notation: string
+        +definition: string
+    }
+    
+    class Collection {
+        +prefLabel: string
+    }
+    
+    Concept <|-- OverviewLevel
+    Concept <|-- ContextLevel
+    Concept <|-- StructuralLevel
+    Concept <|-- MechanismLevel
+    Concept <|-- ImplementationLevel
+    
+    OverviewLevel --> ContextLevel: narrower
+    ContextLevel --> StructuralLevel: narrower
+    StructuralLevel --> MechanismLevel: narrower
+    MechanismLevel --> ImplementationLevel: narrower
+    
+    ConceptScheme --> OverviewLevel: topConceptOf
+    ConceptScheme --> Concept: contains
+    
+    Collection <|-- OverviewLevelSpecializations
+    Collection <|-- ContextLevelSpecializations
+    Collection <|-- StructuralLevelSpecializations
+    Collection <|-- MechanismLevelSpecializations
+    Collection <|-- ImplementationLevelSpecializations
+    
+    ZoomableComponent --> Concept: hasAbstractionLevel
+    ZoomableComponent --> ZoomableComponent: hasParentComponent/hasChildComponent
+    
+    DomainSpecialization --> Concept: specializesAbstractionLevel
+    Collection --> DomainSpecialization: member

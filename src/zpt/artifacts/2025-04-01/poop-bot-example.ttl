@@ -1,0 +1,71 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix zoom: <http://purl.org/zoom/core#> .
+@prefix zoom-code: <http://purl.org/zoom/code#> .
+@prefix zoom-ai: <http://purl.org/zoom/ai#> .
+@prefix ex: <http://example.org/ai-robot-cleaner#> .
+
+# AI domain specialization
+zoom-ai:
+    a owl:Ontology ;
+    rdfs:label "AI Domain Zoom Levels" ;
+    rdfs:comment "Domain-specific zoom levels for AI projects." ;
+    owl:imports zoom: ;
+    owl:imports zoom-code: .
+
+# AI domain specific classes
+zoom-ai:AIComponent 
+    a owl:Class ;
+    rdfs:subClassOf zoom-code:CodeComponent ;
+    rdfs:label "AI Component" ;
+    rdfs:comment "A software component that uses artificial intelligence." .
+
+zoom-ai:Model 
+    a owl:Class ;
+    rdfs:subClassOf zoom-ai:AIComponent ;
+    rdfs:label "Model" ;
+    rdfs:comment "An AI model used for prediction or decision making." .
+
+zoom-ai:Sensor 
+    a owl:Class ;
+    rdfs:subClassOf zoom-ai:AIComponent ;
+    rdfs:label "Sensor" ;
+    rdfs:comment "A sensor used to collect data for an AI system." .
+
+zoom-ai:Actuator 
+    a owl:Class ;
+    rdfs:subClassOf zoom-ai:AIComponent ;
+    rdfs:label "Actuator" ;
+    rdfs:comment "A component that performs physical actions based on AI decisions." .
+
+zoom-ai:Controller 
+    a owl:Class ;
+    rdfs:subClassOf zoom-ai:AIComponent ;
+    rdfs:label "Controller" ;
+    rdfs:comment "A component that coordinates between AI models and physical systems." .
+
+# AI domain specific properties
+zoom-ai:hasAccuracy 
+    a owl:DatatypeProperty ;
+    rdfs:label "has accuracy" ;
+    rdfs:comment "The accuracy rate of an AI model." ;
+    rdfs:domain zoom-ai:Model ;
+    rdfs:range xsd:decimal .
+
+zoom-ai:hasInputType 
+    a owl:DatatypeProperty ;
+    rdfs:label "has input type" ;
+    rdfs:comment "The type of input data for an AI component." ;
+    rdfs:domain zoom-ai:AIComponent ;
+    rdfs:range rdfs:Literal .
+
+zoom-ai:hasOutputType 
+    a owl:DatatypeProperty ;
+    rdfs:label "has output type" ;
+    rdfs:comment "The type of output data from an AI component." ;
+    rdfs:domain zoom-ai:AIComponent ;
+    rdfs:range rdfs:Literal .
