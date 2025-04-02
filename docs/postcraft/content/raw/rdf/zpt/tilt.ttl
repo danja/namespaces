@@ -1,0 +1,93 @@
+@prefix : <http://example.org/tilt-ontology#>
+@prefix tilt: <http://example.org/tilt/>
+@prefix corpuscle: <http://example.org/corpuscle-ontology#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+@prefix dc: <http://purl.org/dc/elements/1.1/>
+
+: a owl:Ontology ;
+  rdfs:label "Tilt Ontology" ;
+  rdfs:comment "Ontology for defining information retrieval parameters over corpuscles" ;
+  owl:imports corpuscle: .
+
+### Classes ###
+:TiltConfiguration a owl:Class ;
+  rdfs:label "Tilt Configuration" ;
+  rdfs:comment "A set of parameters defining retrieval preferences for conceptual regions" .
+
+:EmbeddingSimilarity a owl:Class ;
+  rdfs:label "Embedding Similarity" ;
+  rdfs:comment "Preference based on vector space proximity of corpuscle embeddings" .
+
+:GraphProximity a owl:Class ;
+  rdfs:label "Graph Proximity" ;
+  rdfs:comment "Preference based on path length in RDF relations" .
+
+:KeywordMatch a owl:Class ;
+  rdfs:label "Keyword Match" ;
+  rdfs:comment "Preference based on lexical matches in corpuscle metadata" .
+
+### Properties ###
+:hasComponent a owl:ObjectProperty ;
+  rdfs:domain :TiltConfiguration ;
+  rdfs:range owl:Thing ;
+  rdfs:label "has component" ;
+  rdfs:comment "Links configuration to its parameter components" .
+
+:weight a owl:DatatypeProperty ;
+  rdfs:domain owl:Thing ;
+  rdfs:range xsd:float ;
+  rdfs:label "weight" ;
+  rdfs:comment "Relative importance of this parameter in configuration" .
+
+:targetModel a owl:ObjectProperty ;
+  rdfs:domain :EmbeddingSimilarity ;
+  rdfs:range corpuscle:Embedding ;
+  rdfs:label "target model" ;
+  rdfs:comment "Specific embedding model to use for similarity calculations" .
+
+:similarityMetric a owl:DatatypeProperty ;
+  rdfs:domain :EmbeddingSimilarity ;
+  rdfs:range xsd:string ;
+  rdfs:label "similarity metric" ;
+  rdfs:comment "Distance measure (cosine/euclidean)" .
+
+:pathExpression a owl:DatatypeProperty ;
+  rdfs:domain :GraphProximity ;
+  rdfs:range xsd:string ;
+  rdfs:label "path expression" ;
+  rdfs:comment "SPARQL property path pattern for proximity calculation" .
+
+:matchThreshold a owl:DatatypeProperty ;
+  rdfs:domain :KeywordMatch ;
+  rdfs:range xsd:integer ;
+  rdfs:label "match threshold" ;
+  rdfs:comment "Minimum number of keyword matches required" .
+
+:targetKeywords a owl:DatatypeProperty ;
+  rdfs:domain :KeywordMatch ;
+  rdfs:range xsd:string ;
+  rdfs:label "target keywords" ;
+  rdfs:comment "Comma-separated list of search terms" .
+
+### Example Instance ###
+tilt:TransformerFocus a :TiltConfiguration ;
+  rdfs:label "Transformer Architecture Focus" ;
+  :hasComponent tilt:EmbSim1, tilt:GraphPath1, tilt:Keywords1 .
+
+tilt:EmbSim1 a :EmbeddingSimilarity ;
+  :targetModel corpuscle:text-embedding-ada-002 ;
+  :similarityMetric "cosine" ;
+  :weight 0.7 .
+
+tilt:GraphPath1 a :GraphProximity ;
+  :pathExpression "dc:creator/^dc:creator" ;
+  :weight 0.2 ;
+  rdfs:comment "Papers by same authors" .
+
+tilt:Keywords1 a :KeywordMatch ;
+  :targetKeywords "transformer,attention mechanism,self-attention" ;
+  :matchThreshold 2 ;
+  :weight 0.1 .

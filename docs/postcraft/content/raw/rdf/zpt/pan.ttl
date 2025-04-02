@@ -1,0 +1,101 @@
+@prefix : <http://example.org/pan-ontology#>
+@prefix pan: <http://example.org/pan/>
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix dc: <http://purl.org/dc/elements/1.1/>
+@prefix dcterms: <http://purl.org/dc/terms/>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+
+: a owl:Ontology ;
+  rdfs:label "Pan Ontology" ;
+  rdfs:comment "An ontology for describing focused knowledge subdomains using cinematographic pan metaphor" ;
+  owl:imports skos: .
+
+### Classes ###
+:Pan a owl:Class ;
+  rdfs:label "Pan" ;
+  skos:definition "A focused subdomain of knowledge within a larger corpus" ;
+  rdfs:comment "Represents a particular region of interest in knowledge space, analogous to cinematographic pan" .
+
+:CoreConcept a owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Core Concept" ;
+  skos:definition "Central concept within the pan's focus area" .
+
+:FringeConcept a owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Fringe Concept" ;
+  skos:definition "Peripheral concept at the edges of the pan's focus area" .
+
+:ExemplaryResource a owl:Class ;
+  rdfs:label "Exemplary Resource" ;
+  skos:definition "External resource exemplifying concepts in the pan" .
+
+:AcademicPaper a owl:Class ;
+  rdfs:subClassOf :ExemplaryResource ;
+  rdfs:label "Academic Paper" ;
+  skos:definition "Scholarly publication related to the pan's subject area" .
+
+### Properties ###
+:hasCoreConcept a owl:ObjectProperty ;
+  rdfs:domain :Pan ;
+  rdfs:range :CoreConcept ;
+  rdfs:label "has core concept" ;
+  skos:definition "Links a pan to its central concepts" .
+
+:hasFringeConcept a owl:ObjectProperty ;
+  rdfs:domain :Pan ;
+  rdfs:range :FringeConcept ;
+  rdfs:label "has fringe concept" ;
+  skos:definition "Links a pan to its peripheral concepts" .
+
+:hasExemplaryResource a owl:ObjectProperty ;
+  rdfs:domain :Pan ;
+  rdfs:range :ExemplaryResource ;
+  rdfs:label "has exemplary resource" ;
+  skos:definition "Links pan to external exemplars" .
+
+:panSummary a owl:DatatypeProperty ;
+  rdfs:domain :Pan ;
+  rdfs:range xsd:string ;
+  rdfs:label "pan summary" ;
+  skos:definition "Textual description of the pan's focus area" .
+
+:hasTag a owl:DatatypeProperty ;
+  rdfs:domain :Pan ;
+  rdfs:range xsd:string ;
+  rdfs:label "has tag" ;
+  skos:definition "Categorical label for the pan" .
+
+:hasKeyword a owl:DatatypeProperty ;
+  rdfs:domain :Pan ;
+  rdfs:range xsd:string ;
+  rdfs:label "has keyword" ;
+  skos:definition "Descriptive term for the pan's content" .
+
+### Example Instance ###
+pan:NeuralMT a :Pan ;
+  rdfs:label "Neural Machine Translation" ;
+  :panSummary "Focused study of neural approaches to automated translation between human languages" ;
+  :hasTag "NLP", "Deep Learning" ;
+  :hasKeyword "transformer", "attention mechanism", "seq2seq" ;
+  :hasCoreConcept pan:AttentionMechanism, pan:EncoderDecoder ;
+  :hasFringeConcept pan:SubwordTokenization, pan:ZeroShotTranslation ;
+  :hasExemplaryResource pan:Vaswani2017Paper .
+
+pan:AttentionMechanism a :CoreConcept ;
+  skos:prefLabel "Attention Mechanism" ;
+  skos:definition "Neural network component that dynamically weights input relevance" ;
+  skos:related pan:TransformerArchitecture .
+
+pan:SubwordTokenization a :FringeConcept ;
+  skos:prefLabel "Subword Tokenization" ;
+  skos:definition "Text segmentation using subword units for rare word handling" .
+
+pan:Vaswani2017Paper a :AcademicPaper ;
+  rdfs:label "Attention Is All You Need" ;
+  dc:identifier "doi:10.48550/arXiv.1706.03762" ;
+  dcterms:abstract "Introduces transformer architecture with self-attention mechanisms" ;
+  dc:creator "Vaswani, Ashish et al." .
