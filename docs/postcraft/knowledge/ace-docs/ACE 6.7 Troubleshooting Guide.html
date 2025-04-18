@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>ACE 6.7 Troubleshooting Guide</title>
+<meta name="Author" content="Norbert E. Fuchs"/>
+<meta name="Author" content="Tobias Kuhn"/>
+
+<script type="text/javascript" src="http://attempto.ifi.uzh.ch/site/script/toc.js"></script>
+
+<link rel="stylesheet" title="default" href="http://attempto.ifi.uzh.ch/site/css/ace.css" media="screen" type="text/css"/>
+</head>
+
+<body onload="toc(1, 0)">
+
+<h1>ACE 6.7 Troubleshooting Guide</h1>
+
+
+<p>ACE supplies the means to express texts in a concise, unambiguous and easily understandable way. However, effective use of the language ACE needs some experience. This document shows typical problems in using ACE and gives advice how to solve them, or how to avoid them.</p>
+
+<p>To indicate the meaning of a phrase we use {...} that should not be confused with ACE's set notation. A sentence prefixed with <code>*</code> is not part of ACE, but serves as counter example.</p>
+
+
+<h2>General Hints</h2>
+
+
+<h3>Construction</h3>
+
+<ul>
+<li>Only use complete sentences. Put a full-stop after declarative sentences, a question-mark after interrogative sentences, and an exclamation mark after imperative sentences.</li>
+
+<li>Commas are only possible in front of <em>and</em> and <em>or</em>, in a specific position within imperative sentences, and in lists and sets.</li>
+
+<li>Do not use any other punctuation.</li>
+
+<li>Stick to the predefined word order of ACE.</li>
+
+<li>Every noun needs a determiner.</li>
+
+<li>Make sure you comply with the definition, use and interpretation of ACE function words.</li>
+</ul>
+
+<p>Though the ACE parser will unravel every syntactically correct sentence, however complex, you may have problems to do so. Thus keep your sentences short and simple. Specifically</p>
+
+<ul>
+<li>Avoid unnecessarily complex coordinations.</li>
+
+<li>Avoid unnecessarily involved combinations of negation, quantification and coordination.</li>
+
+<li>Use several short sentences instead of one complex sentence.</li>
+
+<li>Give agents for all actions: use active sentences or passive sentences with the phrase <em>by ...</em>.</li>
+</ul>
+
+
+<h3>Interpretation</h3>
+
+<ul>
+<li>Be as explicit as possible.</li>
+
+<li>Avoid ambiguous or misleading constructions.</li>
+
+<li>Check that the paraphrase given by the Attempto system reflects your intended interpretation. If it does not, reformulate your sentence.</li>
+
+<li>In doubt, look-up the <a  
+href="ace_interpretationrules.html">ACE interpretation rules</a>.</li>
+</ul>
+
+
+<h2>Troubleshooting</h2>
+
+<p>After you have entered a text, the Attempto system analyses it and returns a paraphrase. Two things can go wrong: the Attempto system does not accept (part of) your text, or it accepts your text but the paraphrase does not reflect your intended interpretation. In both cases the text has to be modified. The following sections show typical causes for errors and give strategies for reformulation.</p>
+
+<h3>What if the Attempto system does not accept your input?</h3>
+
+<p>Sentences are rejected when they contain unknown or misspelled words, or when the structure of the sentences does not correspond to the ACE grammar. In each case, the Attempto system processes your input up to the first incorrect sentence, and then generates error messages and suggestions for improvement. Misspelled or unknown words are listed for your convenience. If there are syntax errors, the first erroneous sentence is displayed.</p>
+
+<p>The ACE parser will generate error and warning messages and also suggestions how to avoid the errors. However, not all errors are completely identified and correctly localised. The following checklist helps you to systematically look for the causes of errors.</p>
+
+
+<h4>Do you use words or word forms that are not in the lexicon?</h4>
+
+<ul>
+<li>You have misspelled a word.</li>
+<li>You use function words that are not defined.</li>
+<li>You use content words that you have not defined.</li>
+<li>You have incorrectly classified a content word, i.e. in the text you use the word not in accordance to your classification, e.g. wrong word class, wrong type, wrong number or category of complements etc.</li>
+</ul>
+
+<p>Correct misspelled words, and use defined words correctly.</p>
+
+<h4>Do you use constructions that are not available in the ACE grammar?</h4>
+
+<ul>
+<li>Do not use other tenses than the simple present.</li>
+
+<li>Do not put adverbs or prepositional phrases at the beginning of the sentence.</li>
+
+<li>Always start implications with the condition (<em>if</em>) followed by the consequence (<em>then</em>). Do not add a comma in front of the <em>then</em>.</li>
+
+<li>Do only coordinate phrases of the same syntactic type.</li>
+
+<li>Always begin a relative clause with one of the relative pronouns <em>who</em>, <em>which</em>, or <em>that</em>.</li>
+
+<li>Do not use nouns without a determiner.</li>
+
+<li>Do not use prepositional phrases &mdash; except <em>of</em>-phrases &mdash; as modifiers of nouns <em>A card in a slot is invalid.</em>. Use a relative clause instead <em>A card that is in a slot is invalid.</em></li>
+
+<li>Always add an agent to a passive construct <em>A code is entered by a customer.</em> or use the active <em>A customer enters the code.</em>.</li>
+
+</ul>
+
+<h3>What if sentences do not reflect the intended interpretation?</h3>
+
+<p>If a sentence is accepted by the system but the paraphrase does not correspond to the intended interpretation then you have to reformulate the sentence. Here are some hints.</p>
+
+
+<h4>Prepositional Phrases</h4>
+
+<p>Prepositional phrases used as adjuncts modify the verb, not the noun. If you want to modify the noun, you have to use a relative clause. In the relative clause you have to introduce a verb or an adjective that captures the intended meaning.</p>
+
+<p>Use a relative clause to modify the noun (except for <em>of</em>-constructions).</p>
+
+<pre>
+Input: A bank accepts every card with a blue sign.
+Interpretation: There is a bank.
+If there is a card then the bank accepts the card with a blue sign.
+</pre>
+
+<p>This interpretation is not intended, since it means that the instrument of accepting the card is the blue sign.</p>
+
+<pre>
+Reformulation: A bank accepts every card that has a blue sign.
+Interpretation: There is a bank.
+If a card has a blue sign then the bank accepts the card.
+</pre>
+
+
+<h4>Anaphoric Reference</h4>
+
+<p>You can use proper nouns or anaphors &mdash; personal pronouns, definite noun phrases and variables &mdash; to refer to a previously mentioned noun phrase. To resolve an anaphoric reference, the system always chooses the most recent and most specific noun phrase that has the same number and gender, and that is accessible. Sometimes you may find that this choice does not reflect your intended interpretation. The following sentences show techniques how you can manipulate the sentence structure to get the intended connection.</p>
+
+
+<p>Use a definite noun phrase instead of a pronoun.</p>
+
+<pre>
+Input: If a credit-card has a signature then it is valid.
+Interpretation: If a credit-card has a signature then the signature is valid.
+</pre>
+
+<pre>
+Reformulation: If a credit-card has a signature then the credit-card is valid.
+</pre>
+
+
+<p>Use a relative clause.</p>
+
+<pre>
+Input: If a customer pushes the key then the automatic-teller prints a receipt. It shows the date of the transaction.
+</pre>
+
+<p>ACE does not accept the second sentence because no noun phrase is accessible in the first sentence to replace the personal pronoun <em>it</em>.</p>
+
+<pre>
+Reformulation: If a customer pushes the key then the automatic-teller prints a receipt that shows the date of the transaction.
+</pre>
+
+<p>In the sentence</p>
+
+<pre>
+Every customer has a card and a personal-code. The personal-code is associated with the card.
+</pre>
+
+<p>there are no anaphoric connections between <em>the card</em> and <em>a card</em>, and between <em>the personal-code</em> and <em>a personal-code</em>, because noun phrases in the scope of <em>every</em> are not accessible from subsequent sentences.</p>
+
+<pre>
+Reformulation: Every customer has a card and a personal-code that is associated with the card.
+</pre>
+
+
+<h4><em>of</em>-Constructs</h4>
+
+<p>It is possible to refer back to both parts of an <em>of</em>-construction separately.</p>
+
+<pre>
+A student gives a demonstration of a program. The program runs on a computer. The demonstration is in a room.
+</pre>
+
+<p>An <em>of</em>-construct followed by a noun phrase conjunction pertains to the complete noun phrase conjunction. Thus the following sentence</p>
+
+<pre>
+A man sees a dog of Mary and John. 
+</pre>
+
+<p>that is ambiguous in English gets in ACE the unique interpretation that a man sees a dog that belongs to both Mary and John, i.e. as <em>A man sees {a dog of Mary and John}</em>. To express that the man sees John and a dog of Mary, one can write</p>
+
+<pre>
+A man sees John and a dog of Mary.
+</pre>
+
+<p>Similarly the sentence</p>
+
+<pre>
+John assesses a degree of Toxicity and a degree of Dehydration.
+</pre>
+
+<p>is &mdash; probably incorrectly &mdash; interpreted as <em>John assesses {a degree of {Toxicity and a degree of 
+Dehydration}}.</em> To get the intended interpretation you could write</p>
+
+<pre>
+John assesses a degree of Toxicity and assesses a degree of Dehydration.
+</pre>
+
+
+<h4>Binding Hierarchy</h4>
+
+<p>If you combine <em>and</em> and <em>or</em> you have to be aware of the binding hierarchy that controls which parts belong more closely to each other. By default, <em>and</em> binds stronger than <em>or</em>. However, you can override the default binding in various ways.</p>
+
+<pre>
+The customer enters a red card or enters a blue card and enters a personal-code.
+</pre>
+
+<p>ACE interprets this sentence as expressing two alternatives. The customer entering a red card is the first alternative. The customer entering a blue card and a personal code is the second alternative. If this interpretation does not correspond to your intention there are several possibilities for reformulation.</p>
+
+<p>Use commas to override the binding hierarchy and explicitly show the intended structuring.</p>
+
+<pre>
+The customer enters a red card or enters a blue card, and enters a personal-code.
+</pre>
+
+<p>ACE interprets this as two alternatives. In the first alternative the customer enters a red card, or a blue card. In the second alternative the customer enters a personal code. Note that <em>and</em> and <em>or</em> have only a logical, not a temporal meaning.</p>
+
+<p>Make two simpler sentences.</p>
+
+<pre>
+The customer enters a red card or enters a blue card.
+The customer enters a personal-code.
+</pre>
+
+<p>Repeat conjuncts.</p>
+
+<pre>
+The customer enters a red card and enters a personal-code or enters a blue card and enters a personal-code.
+</pre>
+
+
+<h4>How to Express Exclusive Disjunction?</h4>
+
+<p>In ACE, <em>or</em> expresses inclusive disjunction, i.e. the sentence</p>
+
+<pre>
+If the customer works in a bank then he gets a red card or gets a blue card.
+</pre>
+
+<p>means that the customer can get a red card or a blue card, or both. If you want to exclude that both cards are handed out, i.e. if you want to express exclusive disjunction, you can reformulate the sentence:</p>
+
+<pre>
+If the customer works in a bank then he gets a red card and gets no blue card, or he gets a blue card and gets no red card.
+</pre>
+
+
+<h4>Relative Sentences</h4>
+
+<p>Relative sentences always relate to the immediately preceding noun phrase. 
+This principle of right association eliminates ambiguities but may in some cases conflict 
+with the intended interpretation. To achieve the intended interpretation you have to reformulate your input. 
+We recommend the following techniques. 
+({...} indicate what the relative clause is intended to relate to, 
+respectively actually relates to.)</p>
+
+<p>Split the sentence into two sentences and repeat the intended noun phrase.</p>
+
+<pre>
+Input: John returns {a copy of a book that is damaged}.
+
+Interpretation: John returns a copy of {a book that is damaged}.
+
+Reformulations:
+
+John returns a copy of a book. The copy of the book is damaged.
+John returns a copy of a book. The copy is damaged.
+John returns a copy of a book and the copy is damaged.
+</pre>
+
+<p>Move the relative clause to a different position.</p>
+
+<pre>
+Input: The customer enters {a card into the slot which is invalid}.
+
+Interpretation: The customer enters a card into {the slot which is invalid}.
+
+Reformulations:
+
+The customer enters a card which is invalid into the slot.
+The customer enters a card into the slot. The card is invalid.
+The customer enters a card into the slot and the card is invalid.
+</pre>
+
+<p>Avoid the relative clause and use an adjective instead.</p>
+
+<pre>
+Input: The customer enters {a card into the slot which is invalid}.
+
+Interpretation: The customer enters a card into {the slot which is invalid}.
+
+Reformulation: The customer enters an invalid card into the slot.
+</pre>
+
+<p>Note that ACE will translate <em>a valid card</em> and <em>a card that is valid</em> differently.</p>
+
+<p>Replace the constructor <em>every</em> and use an implication instead.</p>
+
+<pre>
+Input: {Every copy of a book that has a yellow point} is not available.
+
+Interpretation: Every copy of {a book that has a yellow point} is not available.
+
+Reformulation: If a copy of a book has a yellow point then the copy is not available.
+</pre>
+
+
+<h4>Relative Sentences and Coordination</h4>
+
+<p>Verb phrases preceded by a coordinator after a relative clause belong to the main sentences not the relative clause.</p>
+
+
+<p>To make the coordinated verb phrase belong to the relative clause repeat the relative pronoun <em>that</em>.</p>
+
+<pre>
+Input: The customer enters a card that is valid and has a code.
+
+Interpretation: The customer enters {a card that is valid} and has a code.
+
+Reformulation: The customer enters {a card that is valid and that has a code}.
+</pre>
+
+<p>The following sentence</p>
+
+<pre>
+John knows Bill who knows Mary and Sue.
+</pre>
+
+<p>is interpreted as <em>John knows {Bill who knows {Mary and Sue}}.</em> 
+To get the interpretation <em>John knows {{Bill who knows Mary} and Sue}.</em> you 
+could use one of the following alternatives</p>
+
+<pre>
+John knows Sue and Bill who knows Mary.
+John knows Bill who knows Mary. John knows Sue.
+
+</pre>
+
+<h4>Quantification</h4>
+
+<p>Make sure you express the intended scoping when you use quantifiers. Remember that the textual order of the quantifiers corresponds to their relative scope. That means you have to change the position of the quantifiers in the sentence to change their scope. This restructuring can be done by using the passive, or the constructors <em>there is a</em> and <em>for every</em> &mdash; even though this may lead to sentences that sound less natural than the original ones. Scoping problems often occur when you use a universally quantified noun phrase within a prepositional phrase, e.g. <em>a copy of every book</em>.</p>
+
+<pre>
+Input: John assigns a personal-code to every customer.
+Interpretation: There is a personal-code. If there is a customer then John assigns the customer the personal-code.
+</pre>
+
+<p>Thus every customer gets the same personal code. In order to express that every customer gets an individual personal code, reformulate:</p>
+
+<pre>
+Every customer is assigned a personal-code by John.
+For every customer John assigns a personal-code to the customer.
+For every customer there is a personal-code that John assigns to the customer.
+If there is a customer then John assigns the customer a personal-code.
+</pre>
+
+<pre>
+Input: Every employee gets an extra holiday.
+Interpretation: If there is an employee then the employee gets a extra holiday.
+</pre>
+
+<p>Thus every employee gets an individual extra holiday. In order to express that the extra holiday is the same for every employee, reformulate:</p>
+
+<pre>
+There is an extra holiday that every employee gets.
+</pre>
+
+
+<h4>Quantification and Coordination</h4>
+
+<p>Note that in ACE a sentence like</p>
+
+<pre>
+Every tourist has a red card or has a blue card.
+</pre>
+
+
+<p>means that some tourists have a red card, others have a blue card, some have possibly both, i.e. all tourists do have at least one of the two types of credit cards. The sentence does not mean that every tourist has the same type of credit card. This meaning would have to be expressed by using two universally quantified statements:</p>
+
+<pre>
+Every tourist has a red card or every tourist has a blue card.
+</pre>
+
+<h4>Negation</h4>
+
+<p>Combinations of negators (<em>no</em>, <em>does not</em>, <em>is not</em>) with coordinators or quantifiers must be used carefully. We recommend to be as explicit as possible when combining these constructors.</p>
+
+
+<h5>Negation and Coordination</h5>
+
+<pre>
+Input: The ATM does not accept a red card or does not accept a blue card.
+
+Interpretation: It is false that the ATM accepts a red card or it is false that the ATM accepts a blue card.
+</pre>
+
+<p>In ACE the sentence does not mean that the ATM accepts neither a red card nor a blue card. If you want to express this meaning you have several possibilities.</p>
+
+
+<p>Use a plural object.</p>
+
+<pre>
+The ATM does not accept a red card and a blue card.
+</pre>
+
+<p>Coordinate the negation, possibly by making two separate sentences.</p>
+
+<pre>
+The ATM does not accept a red card and does not accept a blue card.
+
+The ATM does not accept a red card. The ATM does not accept a blue card.
+</pre>
+
+<h5>Negation and Quantification</h5>
+
+<p>When you combine negation with quantifiers, take into account that first the negation (<em>is not</em> or <em>does not</em>) is distributed, then surface order determines the scope of the quantifier. Users familiar with predicate logic may notice that reformulations are possible on the basis of predicate logical identities, e.g. <em>(there is) no</em> is the same as <em>(for) every ... not</em>, etc.</p>
+
+<pre>
+Input: Every card is not valid.
+
+Interpretation: If there is a card then it is false that the card is valid.
+
+Input: There is a card that is not valid.
+
+Interpretation: There is a card. It is false that the card is valid.
+
+Input: Every card is not valid or is not green.
+
+Interpretation: If there is a card then it is false that the card is valid or it is false that the card is green.
+</pre>
+
+
+<h2>Examples of common mistakes</h2>
+
+<p>The following lists some sentences which sound natural in English, but which are not covered by ACE.</p>
+
+<p>You want to express that all cats are animals and write</p>
+<pre>
+A cat is an animal.
+</pre>
+
+<p>The determiner <em>a</em> means existential quantification, that is the sentence is interpreted as <em>There is a cat. The cat is an animal</em>. To express that all cats are animals use, for instance</p>
+
+<pre>
+Every cat is an animal. (= If there is a cat then the cat is an animal.)
+</pre>
+
+<p>When John sees his wife then it is tempting to write</p>
+
+<pre>
+John sees his wife.
+</pre>
+
+<p>However, the personal pronoun <em>his</em> is interpreted as referring to a masculine noun phrase introduced in the previous sentence (e.g. "There is a man. John sees his wife."). In this case, there is no such preceding sentence and therefore the anaphora resolution fails. Use instead</p>
+
+<pre>
+John sees his own wife.
+</pre>
+
+
+<p>Disjunction of noun phrases is not supported in ACE.</p>
+
+<pre>
+John enters a card or a code.
+</pre>
+
+<p>Use instead:</p>
+
+<pre>
+John enters a card or enters a code.
+</pre>
+
+
+<p><em>There-is</em>-sentences cannot be modified by prepositional phrases in ACE.</p>
+
+<pre>
+*There is a card in a slot.
+</pre>
+
+<p>Use instead:</p>
+
+<pre>
+A card is in a slot.
+</pre>
+
+
+<p>Adverbs that modify other adverbs are not supported in ACE.</p>
+
+<pre>
+*John drives extremely carefully.
+</pre>
+
+<p>In order to modify a verb with two or more adverbs,
+you must coordinate them, e.g.</p>
+
+<pre>
+John drives extremely and carefully.
+</pre>
+
+
+<p>Adverbs that modify complete sentences are not supported in ACE.</p>
+
+<pre>
+*John only works.
+</pre>
+
+<p>ACE always prefers an intransitive reading of verbs and thus analyses this sentence as containing an intransitive verb (<em>comes</em>) modified by a prepositional phrase (<em>across an interesting story</em>).</p>
+
+<pre>
+John comes across an interesting story.
+</pre>
+
+<p>Use instead:</p>
+
+<pre>
+John comes-across an interesting story.
+</pre>
+
+
+<p>The movement of phrasal particles is not supported in ACE. Also, the phrasal verbs must be hyphenated.</p>
+
+<pre>
+John looks up a word. He looks it up.
+</pre>
+
+<p>Use instead:</p>
+
+<pre>
+John looks-up a word. He looks-up it.
+</pre>
+
+<p>Though the second sentence is acceptable in ACE, it is not pragmatically acceptable in standard English, and should be replaced by</p>
+
+<pre>
+He looks-up the word.
+</pre>
+
+
+
+<h2>Lexicon Issues</h2>
+
+<p>All content words (nouns, verbs, adjectives, adverbs) must be defined in the
+built-in lexicon, or in a user-supplied lexicon. If present, user lexicons are 
+searched first. </p>
+
+<p>Words that fall into more than one word class must occur in the lexicon for 
+each of the word classes. One example is the word <em>surface</em> that can be a noun, an adjective, or a verb. 
+
+<pre>
+The surface of the lens is clean.
+Some surface impurities are removed.
+The diver surfaces.
+</pre>
+
+Other examples are chemical elements and compositions that can occur as proper nouns or as mass nouns. </p>
+
+<pre>
+Helium is an element.
+The balloon contains 20 kg of helium.
+</pre>
+
+
+<address>
+2013-07-31
+</address>
+
+</body>
+</html>

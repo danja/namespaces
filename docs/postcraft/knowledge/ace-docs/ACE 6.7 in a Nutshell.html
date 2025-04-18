@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>ACE 6.7 in a Nutshell</title>
+<meta name="Author" content="Norbert E. Fuchs"/>
+<meta name="Author" content="Tobias Kuhn"/>
+
+<script type="text/javascript" src="http://attempto.ifi.uzh.ch/site/script/toc.js"></script>
+
+<link rel="stylesheet" title="default" href="http://attempto.ifi.uzh.ch/site/css/ace.css" media="screen" type="text/css"/>
+
+</head>
+
+<body onload="toc(1, 0)">
+
+<h1>ACE 6.7 in a Nutshell</h1>
+
+<!--
+<pre id="toc">
+</pre>
+-->
+
+
+<p>This document presents ACE 6.7 in a nutshell. Section 1 briefly describes the vocabulary, section 2 gives an account of the syntax, section 3 summarises the handling of ambiguity, and section 4 explains anaphoric references. </p>
+
+<p>Note that this document describes only selected features of ACE 6.7. For more information refer to the <a href="ace_constructionrules.html">ACE Construction Rules</a> and to the <a href="ace_interpretationrules.html">ACE Interpretation Rules</a>.</p>
+
+
+<h2>Vocabulary</h2>
+
+<p>The vocabulary of ACE comprises</p>
+
+<ul>
+<li>predefined function words (e.g. determiners, conjunctions, query words)</li>
+<li>some predefined fixed phrases (<em>there is</em>, <em>it is false that</em>, ... )</li>
+<li>content words (nouns, proper names, verbs, adjectives, adverbs)</li>
+</ul>
+
+<p>The Attempto Parsing Engine (APE) comes with a basic lexicon of content words. Users can also import their own lexicons of content words into APE (cf. <a href="ace_lexicon.html">ACE Lexicon Specification</a>). User-defined words take precedence over words found in the basic lexicon. Alternatively, users can let  APE guess unknown words, or users can prefix unknown words by their word-class, for instance <em>n:kitkat</em>, <em>p:Thomas</em>, <em>v:google</em>, <em>a:trusted</em>, <em>a:undeviatingly</em>.</p>
+
+
+<h2>Grammar</h2>
+
+<p>The grammar of ACE defines the syntax of ACE texts. ACE's syntax is expressed as a set of construction rules (cf. <a href="ace_constructionrules.html">ACE Construction Rules</a>). The meaning of syntactically correct sentences is described as a set of interpretation rules (cf. <a href="ace_interpretationrules.html">ACE Interpretation Rules</a>).</p>
+
+
+<h3>ACE Texts</h3>
+
+<p>An ACE text is a sequence of anaphorically interrelated declarative, interrogative and imperative sentences.</p>
+
+<p>Declarative sentences include simple sentences, <em>there is/are</em>-sentences, and composite sentences.</p>
+
+
+<h3>Simple Sentences</h3>
+
+
+<p>Simple ACE sentences have the following structure:</p>
+
+<p>
+subject + verb + complements + adjuncts
+</p>
+
+<p>Every sentence built according to this structure has at least a subject and a verb. Complements (direct and indirect objects) are necessary for transitive verbs (<em>insert something</em>) and ditransitive verbs (<em>give something to somebody</em>), whereas adjuncts (adverbs, prepositional phrases) modifying verbs are optional. Adjuncts can precede the verb or follow the verb, respectively its complements.</p>
+
+<pre>
+A customer waits.
+The temperature is -2°C.
+A customer owns a card.
+A customer gives a card to a clerk.
+</pre>
+
+<h3><em>there is/are</em>-Sentences</h3>
+
+<p>
+It is possible to create well-formed sentences without a verb, by using the <em>there is/are</em>
+construct.
+</p> 
+
+<pre>
+there is + noun phrase
+there are + noun phrase
+</pre>
+
+<p>Every sentence of this structure introduces only the object, respectively objects, described by the noun phrase.</p>
+
+<pre>
+There is a customer. 
+There are at least 3 apples.
+</pre>
+
+<h3>Adding Detail</h3>
+
+<p>Elements of a simple sentence and <em>there is/are</em>-sentences can be fleshed out to describe the situation in more detail. To further specify nouns, we can add adjectives</p>
+
+<pre>
+A trusted customer inserts two valid cards.
+There are two valid cards.
+</pre>
+
+<p>possessive nouns and of-prepositional phrases</p>
+
+<pre>
+John's customer inserts a card of Mary.
+</pre>
+
+<p>or variables as appositions</p>
+
+<pre>
+John inserts a card A.
+</pre>
+
+<p>Other modifications of nouns are possible through relative clauses</p>
+
+<pre>
+A customer who is trusted inserts a card that he owns.
+There are at least 2 cards that are valid.
+</pre>
+
+<p>We can also detail the verb, e.g. by adding an adverb</p>
+
+<pre>
+A customer inserts some cards manually.
+</pre>
+
+<p>or, by adding prepositional phrases</p>
+
+<pre>
+A customer inserts some cards into an ATM.
+</pre>
+
+<p>We can combine all of this to arrive at</p>
+
+<pre>
+John's customer who is trusted inserts a valid card of Mary manually into an ATM A.
+</pre>
+
+<h3>Composite Sentences</h3>
+
+<p>Composite sentences are recursively built from simpler sentences through coordination, subordination, quantification, and negation.</p>
+
+<h4>Coordination</h4>
+
+<p>Coordination by <em>and</em> is possible between sentences and between phrases of the same syntactic type.</p>
+
+<pre>
+A customer inserts a card and the machine checks the code.
+A customer inserts a card and enters a code.
+An old and trusted customer enters a card and a code.
+</pre>
+
+<p>Note that the coordination of the noun phrases <em>a card and a code</em> represents a plural object.</p>
+
+<p>Coordination by <em>or</em> is possible between sentences, verb phrases, and relative clauses.</p>
+
+<pre>
+A customer inserts a card or the machine checks the code.
+A customer inserts a card or enters a code.
+A customer owns a card that is invalid or that is damaged.
+</pre>
+
+<p>Coordination by <em>and</em> and <em>or</em> is governed by the standard binding order of logic, i.e. <em>and</em> binds stronger than <em>or</em>. Commas can be used to override the standard binding order. Thus the sentence</p>
+
+<pre>
+A customer inserts a VisaCard or inserts a MasterCard, and inserts a code.
+</pre>
+
+<p>means that the customer inserts a VisaCard and a code or, alternatively a MasterCard and a code.</p>
+
+
+<h4>Subordination</h4>
+
+<p>There are three constructs of subordination: if-then sentences, modality, and sentence subordination.</p>
+
+<p>With the help of <em>if-then</em> sentences we can specify conditional or hypothetical situations, e.g.</p>
+
+<pre>
+If a card is valid then a customer inserts it.
+</pre>
+
+<p>Note the anaphoric reference via the pronoun <em>it</em> in the <em>then</em>-part to the noun phrase <em>a card</em> in the <em>if</em>-part.</p>
+
+<p>Modality allows us to express &mdash; among other things &mdash; possibility and necessity.</p>
+
+<pre>
+A trusted customer can insert a card.
+It is necessary that a trusted customer inserts a card.
+</pre>
+
+<p>Sentence subordination &mdash; sentences are used as objects of transitive verbs &mdash; comes in various forms.</p>
+
+<pre>
+It is false that a customer inserts a card.
+It is not provable that a customer inserts a card.
+A clerk believes that a customer inserts a card.
+A clerk intends to enter a card. (= A clerk intends that the clerk enters a card.)
+</pre>
+
+<h4>Quantification</h4>
+
+<p>Quantification allows us to speak about all objects of a class (universal quantification), or to denote explicitly the existence of at least one object of a class (existential quantification). The textual occurrence of a universal or existential quantifier opens its scope that extends to the end of the sentence, or in coordinations to the end of the respective coordinated sentence.</p>
+
+<p>To express that all customers insert cards we can write</p>
+
+<pre>
+Every customer inserts a card.
+</pre>
+
+<p>This sentence means that each customer inserts a card that may, or may not, be the same as the one inserted by another customer. To specify that all customers insert the same card &mdash; however unrealistic that situation seems &mdash; we can write</p>
+
+<pre>
+A card is inserted by every customer.
+</pre>
+
+<p>or, equivalently</p>
+
+<pre>
+There is a card that every customer inserts.
+</pre>
+
+<p>To state that every card is inserted by a customer we write</p>
+
+<pre>
+Every card is inserted by a customer.
+</pre>
+
+<h4>Negation</h4>
+
+<p>Negation allows us to express that something is not the case, e.g.</p>
+
+<pre>
+A customer does not insert a card.
+A card is not valid.
+</pre>
+
+<p>To negate something for all objects of a class one uses <em>no</em></p>
+
+<pre>
+No customer inserts more than 2 cards.
+</pre>
+
+<p>or, <em>there is no</em></p>
+
+<pre>
+There is no customer who inserts a card.
+</pre>
+
+<p>To negate a complete statement one uses sentence negation</p>
+
+<pre>
+It is false that a customer inserts a card.
+</pre>
+
+<p>These forms of negation are logical negations, i.e. they state that something is provably not the case. Negation as failure states that a state of affairs cannot be proved, i.e. there is no information whether the state of affairs is the case or not.</p>
+
+<pre>
+It is not provable that a customer inserts a card.
+</pre>
+
+<h3>Interrogative Sentences</h3>
+
+<p>ACE supports three forms of interrogative sentences: <em>yes/no</em> queries, <em>wh</em>-queries and <em>how much/many</em>-queries. Note that interrogative sentences need always a question mark at the end.</p>
+
+<p><em>Yes/no</em>-queries ask for the existence or non-existence of a specified situation.</p>
+
+<pre>
+Does a customer insert a card?
+Is John a customer?
+</pre>
+
+
+<p>With the help of <em>wh</em>-queries, i.e. queries with query words, we can interrogate a text for details of the specified situation. If we specified</p>
+
+<pre>
+A trusted customer inserts a valid card manually.
+</pre>
+
+<p>we can ask for each element of the sentence with the exception of the verb.</p>
+
+<pre>
+Who inserts a card?
+Which customer inserts a card?
+What does a customer insert?
+How does a customer insert a card?
+</pre>
+
+<p>With the help of <em>how much/many</em>-queries we can ask for the amount of a mass or measurement noun, or for the number of countable nouns. If we specified</p>
+
+<pre>
+A customer owns 2 kg of gold.
+</pre>
+
+<p>we can ask both for the number of customers and for the amount of gold.</p>
+
+<pre>
+How many customers own how much gold?
+</pre>
+
+
+<h3>Imperative Sentences</h3>
+
+<p>ACE also supports imperative sentences, called commands. A command consists of a noun phrase (the addressee), followed by a comma, followed by an uncoordinated verb phrase. A command has to end with an exclamation mark.</p>
+
+<pre>
+John, go to the bank!
+John and Mary, wait!
+Every dog, bark!
+John's brother, give the book to Mary!
+</pre>
+
+
+<h2>Constraining Ambiguity</h2>
+
+<p>To constrain the ambiguity of full English ACE employs three simple means</p>
+
+<ul>
+<li>some ambiguous constructs are not part of the language; unambiguous alternatives are available in their place</li>
+
+<li>all remaining ambiguous constructs are interpreted deterministically on the basis of a small number of interpretation rules</li>
+
+<li>users can either accept the assigned interpretation, or they must rephrase the input to obtain another one</li>
+</ul>
+
+
+<h3>Avoidance of Ambiguity</h3>
+
+<p>Here is an example how ACE replaces ambiguous constructs by unambiguous constructs. In full natural language relative clauses combined with coordinations can introduce ambiguity. Who opens the account in the following case?</p>
+
+<pre>
+A customer inserts a card that is valid and opens an account.
+</pre>
+
+<p>In ACE the sentence has the unequivocal meaning that the customer opens the account. This is reflected by the paraphrase generated by the ACE parser</p>
+
+<pre>
+There is a customer X1. There is a card X2. The card X2 is valid.
+The customer X1 inserts the card X2. The customer X1 opens an account.  
+ </pre>
+
+<p>To express the alternative meaning that the card opens the account the relative pronoun <em>that</em> must be repeated, thus yielding a coordination of relative clauses.</p>
+
+<pre>
+A customer inserts a card that is valid and that opens an account.
+</pre>
+
+<p>with the paraphrase</p>
+
+<pre>
+There is a customer X1. There is a card X2. The card X2 is valid.
+The customer X1 inserts the card X2. The card X2 opens an account.
+
+</pre>
+
+
+<h3>Interpretation Rules</h3>
+
+<p>However, not all ambiguities can be safely removed from ACE without rendering it stilted and artificial. To deterministically interpret otherwise syntactically correct ACE sentences we use a small set of <a href="ace_interpretationrules.html">interpretation rules</a>. For example, if we write</p>
+
+<pre>
+A customer inserts a card with a code.
+</pre>
+
+<p>then <em>with a code</em> attaches to the verb <em>inserts</em>, but not to <em>a card</em>. However, this may not be what we meant to say. To express that the code is associated with the card we can employ the interpretation rule that a relative clause always modifies the immediately preceding noun phrase, and rephrase the input as</p>
+
+<pre>
+A customer inserts a card that carries a code.
+</pre>
+
+<p>yielding the paraphrase</p>
+
+<pre>
+There is a card X1. There is a customer X2.
+The customer X2 inserts the card X1. The card X1 carries a code.
+</pre>
+
+<p>or &mdash; to specify that the customer inserts a card and a code &mdash; as</p>
+
+<pre>
+A customer inserts a card and a code.
+</pre>
+
+
+<h2>Anaphoric References</h2>
+
+<p>Usually an ACE text consist of more than one sentence, e.g.</p>
+
+<pre>
+A customer enters a card and a code.
+If a code is valid then the ATM accepts a card. 
+</pre>
+
+<p>To express that all occurrences of card and code should mean the same card and the same code, ACE provides anaphoric references for instance via the definite article, i.e.</p>
+
+<pre>
+A customer enters a card and a code. 
+If the code is valid then the ATM accepts the card. 
+</pre>
+
+<p>During the processing of the ACE text, all anaphoric references are replaced by the most recent and most specific accessible noun phrase that agrees in gender and number. What does "most recent and most specific" mean?</p>
+
+<p>Given the sentence</p>
+
+<pre>
+A customer enters a red card and a blue card.
+</pre>
+
+<p>then</p>
+
+<pre>
+The card is correct.
+</pre>
+
+<p>refers to the second card, while</p>
+
+<pre>
+The red card is correct.
+</pre>
+
+<p>refers to the first card.</p>
+
+<p>What does "accessible" mean? Like in English noun phrases introduced in <em>if-then</em> sentences, universally quantified sentences, negations, modality, and subordinated sentences cannot be used anaphorically in subsequent sentences. Thus for each of the sentences</p>
+	
+<pre>
+If a customer owns a card then he enters it.
+Every customer enters a card.
+A customer does not enter a card.
+A customer can enter a card.
+A clerk believes that a customer enters a card.
+</pre>
+
+<p>we <b>cannot</b> refer to <em>a card</em> with</p>
+
+<pre>
+The card is correct.
+</pre>
+
+<p>Anaphoric references are also possible via personal pronouns</p>
+
+<pre>
+A customer enters a card and a code.
+If it is valid then the ATM accepts the card. 
+</pre>
+
+<p>or via variables</p>
+
+<pre>
+A customer enters a card X and a code Y. 
+If Y is valid then the ATM accepts X. 
+</pre>
+
+<p>Anaphoric references via definite articles and variables can be combined.</p>
+
+<pre>
+A customer enters a card X and a code Y.
+If the code Y is valid then the ATM accepts the card X. 
+</pre>
+
+<p>Note that proper names like <em>John</em> always refer to the same entity.</p>
+
+<address>
+2013-07-31
+</address>
+</body>
+</html>

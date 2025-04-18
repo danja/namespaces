@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>ACE 6.7 Construction Rules</title>
+<meta name="Author" content="Norbert E. Fuchs"/>
+<meta name="Author" content="Tobias Kuhn"/>
+
+<script type="text/javascript" src="http://attempto.ifi.uzh.ch/site/script/toc.js"></script>
+
+<link rel="stylesheet" title="default" href="http://attempto.ifi.uzh.ch/site/css/ace.css" media="screen" type="text/css"/>
+</head>
+
+<body onload="toc(1, 0)">
+
+<h1>ACE 6.7 Construction Rules</h1>
+
+
+<p>The construction rules define admissible sentence structures for ACE 6.7. 
+Note that every ACE sentence is a syntactically acceptable English sentence, but not every English sentence is an ACE 
+sentence.</p>
+
+<p>
+Note: A sentence prefixed with <code>*</code> is not part of ACE, but serves as counter example.
+</p>
+
+
+<h2>Words</h2>
+
+<p>
+ACE function words and some fixed phrases are predefined and cannot be changed by users.
+Function words are determiners, quantifiers, coordinators,
+negation words, pronouns, query words, modal auxiliaries, copula <em>be</em>, and Saxon genitive marker <em>'s</em>.
+Fixed phrases are, for instance: <em>there is ...  </em> and
+<em>it is not possible that ... </em>.
+</p>
+
+<p>ACE content words are nouns, verbs, adjectives, adverbs and prepositions. Content words
+can be simple (<em>code</em>), or compound with hyphens (<em>check-code</em>).</p>
+
+
+<h2>Phrases</h2>
+
+<h3 id="Noun-Phrases">Noun Phrases</h3>
+
+<h4>Singular Countable Common Noun Phrases</h4>
+
+<pre>
+a card
+the card
+1 card
+one card
+no card
+every card
+each card
+not every card
+not each card
+
+all cards
+no cards
+</pre>
+
+<p>The following determiners can be used interchangeably:
+
+<em>a</em> and <em>1</em> and <em>one</em>,
+<em>every</em> and <em>each</em>,
+<em>not every</em> and <em>not each</em>.
+
+</p>
+
+<p>The noun phrase <em>all cards</em> is syntactic sugar for <em>every card</em>, and the noun phrase <em>no cards</em> is syntactic sugar for <em>no card</em>.</p>
+
+
+<h4>Plural Countable Common Noun Phrases</h4>
+
+<p>Plural countable common noun phrases can be collective:</p>
+
+<pre>
+the cards
+some cards
+3 cards
+three cards
+</pre>
+
+
+<p>or distributive:</p>
+
+<pre>
+each of the cards
+each of some cards
+each of 3 cards
+each of three cards
+</pre>
+
+
+<p>Integers up to 12 used as determiner as in <em>12 cats</em> can be written in characters, i.e. <em>twelve cats</em>. Larger integers must be written in digits.</p>
+
+<h4>Mass Common Noun Phrases</h4>
+
+<pre>
+some water
+no water
+all water
+not all water
+</pre>
+
+<h4>Proper Names</h4>
+
+<p>Proper names can be singular and plural, and can occur without or with the definite determiner. Multiwords like <em>United-Nations</em> must be hyphenated.</p>
+
+<pre>
+John
+Mr-Miller
+the United-Nations
+</pre>
+
+<h4>Integer and Real Numbers</h4>
+
+<p>Integer and real numbers are predefined.</p>
+
+<p>An integer is a non-empty sequence of digits (0-9). A real number consists of a non-empty sequence of digits (0-9) followed by a period followed by a non-empty sequence of digits (0-9). Positive integers and positive real numbers must not be prefixed by a plus sign (<em>+</em>). Negative integers and negative real numbers are prefixed by a minus sign (<em>-</em>).</p>
+
+
+<pre>
+0
+12
+-2
+0.0
+0.2
+2.0
+3.141
+-2.718
+</pre>
+
+<h4>Arithmetic Expressions</h4>
+<p>
+Arithmetic expressions are built from numbers, variables and proper names with the help of the operators +, -, *, /, ^. 
+Standard operator precedence applies. Sub-expressions can be put in parentheses to modify the 
+precedence of the operators. This applies specifically to iterated occurrences of the exponentiation operator ^. The ACE parser APE does not evaluate expressions.
+</p>
+
+<pre>
+1 + 2 / X * 4
+(1 + 2) / X * 4
+Pi/2
+2 ^ 3
+2 ^ (3 ^ 4) vs. (2 ^ 3) ^ 4
+</pre>
+
+<h4>Strings</h4>
+
+<p>
+Strings consists of a sequence of Unicode characters enclosed in double quotes "...". Quotation marks and backslashes within strings have to be escaped by a backslash.
+</p>
+
+<p>
+Strings, variables, proper names and bracketed strings can be concatenated by the left-associative operator &amp;. The ACE parser APE does not perform concatenations.
+</p>
+
+<pre>
+""
+"abc"
+"ab\"cd"
+"ab\\cd"
+"abc" &amp; "123"
+</pre>
+
+
+<h4>Sets and Lists</h4>
+<p>
+Sets consist of a sequence of elements in braces {...}. Lists consist of a sequence of elements in 
+brackets [...]. Elements of sets and lists are numbers, arithmetic expressions, variables, strings, 
+proper names, and sets and lists. 
+</p>
+
+<pre>
+{}
+{3, 6, [1,2]}
+
+[]
+[3, 4, 5, "ab", John, 1+2]
+</pre>
+
+<p>
+Operations on sets and lists could be expressed in natural language.
+Here are possible examples.
+</p>
+
+<pre>
+{} is a subset of {3, 6}
+X is an element of [3, 4, 5]
+</pre>
+
+<h4>Non-Reflexive Pronouns</h4>
+<p>Non-reflexive pronouns third person singular and plural are available for all sentences.</p>
+
+<pre>
+he
+she
+he/she
+it
+they
+him
+her
+him/her
+them
+</pre>
+
+<p>Non-reflexive pronouns second person singular and plural are available for commands.</p>
+
+<pre>
+you
+</pre>
+
+<h4>Reflexive Pronouns</h4>
+
+<p>Reflexive pronouns third person singular and plural are available for all sentences.</p>
+
+<pre>
+itself
+himself
+herself
+himself/herself
+themselves
+</pre>
+
+<p>Reflexive pronouns second person singular and plural are available for commands.</p>
+
+<pre>
+yourself
+yourselves
+</pre>
+
+<h4>Indefinite Pronouns</h4>
+
+<pre>
+someone
+somebody
+something
+no one
+nobody
+nothing
+everyone
+everybody
+everything
+not everyone
+not everybody
+not everything
+</pre>
+
+<p>The following indefinite pronouns can be used interchangeably:
+
+<em>someone</em> and <em>somebody</em>,
+<em>no one</em> and <em>nobody</em>,
+<em>everyone</em> and <em>everybody</em>,
+<em>not everyone</em> and <em>not everybody</em>.
+
+</p>
+
+<h4>Generalised Quantifiers</h4>
+<p>Generalised quantifiers are followed by positive integers.</p>
+
+<p>Noun phrases with generalised quantifiers can be collective:</p>
+
+<pre>
+at least 2 cards
+at most 2 cards
+more than 10 cards
+less than 3 cards
+exactly 3 cards
+</pre>
+
+<p>or distributive:</p>
+
+<pre>
+each of at least 2 cards
+each of at most 2 cards
+each of more than 10 cards
+each of less than 3 cards
+each of exactly 3 cards
+</pre>
+
+
+<h4>Nobody and Nothing But</h4>
+<p>
+The special determiners <em>nobody but</em>, <em>nothing but</em>, and their variant <em>no ... but</em> are used 
+with bare plural noun phrases, bare mass noun phrases or proper names.
+</p>
+
+<pre>
+nothing but apples
+nothing but water
+nobody but John
+no man but John
+</pre>
+
+<h4>Measurement Nouns</h4>
+
+<p>
+Measurement noun phrases are built from numbers followed by measurement nouns and optionally followed 
+by <em>of</em> and a bare mass noun or a bare plural noun.</p>
+
+<pre>
+2 m
+31.2°C
+1.4 l of water
+3 kg of apples
+</pre>
+
+<p>
+Measurement noun phrases can be used in the singular and in the plural. 
+</p>
+
+<pre>
+3 kg of apples is heavy.
+3 kg of apples are heavy.
+</pre>
+
+<h4>Variables</h4>
+<p>Variables can be introduced as noun phrase apposition,
+and can then be used as noun phrases. Variable names consist of a single upper case letter, 
+optionally followed by an integer.</p>
+
+<pre>
+A man X sleeps. X is young.
+If somebody D1 is a dog then D1 is an animal.
+</pre>
+
+<p>If a variable is introduced as apposition to <em>something</em> then it is possible 
+to omit <em>something</em>. These variables are called "bare".</p>
+
+<pre>
+X weighs 300 kg. X is heavy. (= Something X weighs 300 kg. X is heavy.)
+</pre>
+
+
+<h4>Noun Phrase Conjunction</h4>
+<p>The conjunction of noun phrases creates a plural entity that can be anaphorically referred to.</p>
+
+<pre>
+A man and at least 2 women wait. They are tired.
+</pre>
+
+
+
+<h3 id="Modifying-noun-phrases">Modifying Nouns and Noun Phrases</h3>
+
+<h4>Adjectives</h4>
+
+<p>A common noun can optionally be preceded by a positive, comparative, or superlative adjective. 
+Adjectives can be conjoined by <em>and</em>.</p>
+
+<pre>
+a rich customer
+a rich and satisfied customer
+a richer customer (= a more rich customer)
+a richer and more satisfied customer
+a richest customer (= a most rich customer)
+a richest and lucky customer
+</pre>
+
+<h4>Relative Clauses</h4>
+<p>A relative clause can optionally follow a noun phrase, a proper name, or an indefinite pronoun. Relative clauses can be coordinated by <em>and</em> and by <em>or</em>.</p>
+
+<pre>
+a customer that is rich
+a customer who is rich and who is well-known
+a man who waits or who sleeps
+John who waits
+some men each of who waits
+everything which is important
+</pre>
+
+<h4>Variables in Apposition</h4>
+<p>Variables can optionally occur in apposition to a noun phrase. Variable names consist of a single upper case letter, optionally followed by an integer.</p>
+
+<pre>
+a customer X
+the customer C1
+</pre>
+
+
+<h4>Genitives</h4>
+<p>
+Various genitive constructs can optionally be attached to a noun phrase: <em>of</em>-prepositional phrases, 
+Saxon genitives and possessive pronouns. Possessive pronouns are non-reflexive (<em>your</em>, <em>its</em>, 
+<em>his</em>, <em>her</em>, <em>his/her</em>, <em>their</em>), or reflexive (<em>your own</em>, <em>its own</em>, 
+<em>his own</em>, <em>her own</em>, <em>his/her own</em>, <em>their own</em>). Note that the Saxon genitive can only be used with a single noun while the <em>of</em>-prepositional phrase can be followed by a conjunctive noun phrase.  
+</p>
+
+<pre>
+a customer of John
+a dog of John and Mary (= a dog of {John and Mary})
+John's customer
+John and Mary's dog (= John and {Mary's dog})
+everybody's customer
+every man's dog
+X's dog
+his customer
+his own customer
+your customer
+</pre>
+
+
+<h3 id="Verb-Phrases">Verb Phrases</h3>
+
+<p>
+ACE verbs occurring in declarative or interrogative sentences are third person and simple present tense. Passives are built with the past participle and must have a prepositional phrase <em>... by ... </em>. ACE verbs occurring in imperative sentences are second person. 
+</p>
+
+<p>
+Verbs can be intransitive (<em>wait</em>), transitive (<em>enter something</em>), and ditransitive 
+(<em>give something to somebody</em> / <em>give someone something</em>). 
+</p>
+
+
+<p>
+Phrasal particles and those prepositions that introduce a complement of a transitive verb, must be 
+hyphenated to the verb. 
+Prepositions for the indirect object of ditransitive verbs are not hyphenated since they do not 
+immediately follow the verb.
+</p>
+
+<p>
+The copula <em>be</em> as a special case is treated separately (see further down).
+</p> 
+
+
+<h4>Intransitive, Transitive and Ditransitive Verbs</h4>
+<p>Here are some examples. For sentences with transitive and ditransitive verbs, the active and the 
+semantically equivalent passive are given.</p>
+
+<pre>
+John waits.
+John enters a card. (= A card is entered by John.)
+John fills-in a form. (= A form is filled-in by John.)
+John gives a card to a customer. (= A card is given to a customer by John.)
+John gives a customer a card. (= A customer is given a card by John.)
+</pre>
+
+<h4>Copula</h4>
+<p>The copula <em>be</em> must be followed by a noun phrase, an adjective phrase, a concatenation of prepositional phrases or a query word. For the use of the copula in interrogative sentences see <a href="#Interrogative Sentences">Interrogative Sentences</a>.</p>
+
+<p>
+Some examples of the use of the copula.</p>
+
+<pre>
+John is a rich customer.
+John's age is 32.
+John and Mary are two teachers.
+John is rich.
+John is in the garden on the hill.
+John is who?
+</pre>
+
+<p>An adjective phrase following the copula can use a transitive or an intransitive adjective. In both 
+cases, the adjective can be positive, comparative, or superlative. Transitive adjectives always take a 
+prepositional phrase as a complement and the preposition must be hyphenated to the adjective. 
+Intransitive adjectives following a copula can be conjoined, but transitive adjectives cannot. </p>
+
+<pre>
+John is rich.
+John is richer. (= John is more rich.)
+John is richest. (= John is most rich.)
+A customer is rich and more important and most successful.
+John is fond-of Mary.
+John is more fond-of Mary. (= John is fonder-of Mary.)
+John is most fond-of Mary. (= John is fondest-of Mary.)
+*A customer is rich and interested-in a bank.
+</pre>
+
+<p>For the positive and comparative forms, a comparison target can be defined using <em>as ... as</em> 
+or <em>more ... than</em>, respectively. In this case conjunction of the adjectives is not possible.</p>
+
+<pre>
+John is as rich as Mary.
+John is richer than Mary.
+John is as fond-of Mary as Bill.
+John is more fond-of Mary than Bill.
+*A customer is as rich as John and important.
+*A customer is richer than John and important.
+</pre>
+
+<p>In the case of transitive adjectives, one can repeat the preposition in order to make the object 
+be the target of the comparison. (In the examples above, the subject was the target of the 
+comparison.)</p>
+
+<pre>
+John is as fond-of Mary as of Sue.
+John is more fond-of Mary than of Sue.
+</pre>
+
+
+<h4>Negating Verb Phrases</h4>
+
+<p>Verb phrases are negated by <em>does/do not</em> and <em>is/are not</em>.
+For sentence negation see <a href="#Subordination">Subordination</a>.
+</p>
+
+<pre>
+John does not enter a code. 
+The men do not wait.
+Some water is not drinkable.
+The men are not tired.
+</pre>
+
+<h4>Negation as Failure of Verb Phrases</h4>
+
+<p>
+In addition to logical negation, ACE provides negation as failure (<em>... does/do/is/are not 
+provably ...</em>). For negation as failure of sentences see 
+<a href="#Subordination">Subordination</a>.
+</p>
+
+<pre>
+John does not provably wait.
+The men do not provably work.
+John is not provably a teacher.
+The men are not provably admitted.
+</pre>
+
+
+<h4>Modal Verb Phrases</h4>
+<p>
+ACE provides modality with modal auxiliaries for possibility (<em>can/cannot/can not/can't</em>), 
+necessity (<em>must/have to/does not have to</em>), recommendation (<em>should/should not/shouldn't</em>), 
+and admissibility (<em>may/may not</em>). For modal sentences see also
+<a href="#Subordination">Subordination</a>.
+</p>
+
+
+<pre>
+John can wait.
+John cannot wait. (= John can not wait., = John can't wait.)
+John must wait. (= John has to wait.)
+John does not have to wait.
+John should wait.
+John should not wait. (= John shouldn't wait.)
+John may wait.
+John may not wait.
+</pre>
+
+<h4>Coordinating Verb Phrases</h4>
+<p>
+Verb phrases can be coordinated by <em>and</em> and by <em>or</em>.
+</p>
+
+<pre>
+John waits and eats a burger.
+John is rich or earns his own income.
+</pre>
+
+
+<h3>Modifying Verb Phrases</h3>
+
+<p>All verb phrases can be modified by adverbs and by prepositional phrases. 
+Modifiers can precede the verb phrase or &mdash; with the exception of sentence subordination (see further down) &mdash; follow it.</p> 
+
+<p>As the following examples show, not each choice of positioning an adverb or 
+a prepositional phrase is felicitous, but being able to 
+put adverbs and prepositional phrases 
+in different positions allows you to respect English pragmatics.</p>
+
+
+<p>Adverbs and prepositional phrases can precede the verb phrase.</p>
+
+<pre>
+A customer manually inserts a card.
+A customer into a slot inserts a card.
+Every customer usually is curious.
+Every customer in the beginning is inexperienced.
+</pre>
+
+
+<p>Adverbs and prepositional phrases can follow the verb phrase.</p>
+
+<pre>
+A customer inserts a card manually.
+A customer inserts a card into a slot.
+Every customer is curious usually.
+Every customer is inexperienced  in the beginning.
+</pre>
+
+<p>Both positions can be combined.</p>
+
+<pre>
+A customer manually inserts a card into a slot.
+</pre>
+
+<p>In sentence subordination (<a href="#Subordination">Subordination</a>) modifiers of the verb of 
+the main phrase must occur immediately before the verb. No modifiers are allowed between the verb  
+of the main phrase and <em>that</em>, respectively <em>to</em>.</p>
+
+<pre>
+John seriously in the morning believes that Mary fills-in a form.
+John seriously in the morning wants to fill-in a form.
+</pre>
+
+<p>Adverbs can be used in their positive, comparative, or superlative forms.</p>
+
+<pre>
+A customer waits patiently.
+A customer waits more patiently.
+A customer most patiently waits.
+</pre>
+
+<p>Observe the difference between:</p>
+
+<pre>
+A student is interested-in a course.
+A student is interested in a classroom.
+</pre>
+
+<p>If several modifiers are used, two or more adverbs must be conjoined by <em>and</em>,
+two or more prepositional phrases must be concatenated,
+and a sequence of adverbs and prepositional phrases must be concatenated.</p>
+
+<pre>
+A customer inserts a card carefully and manually.
+A customer waits in a bank in the morning.
+A customer carefully and manually inserts a card into the slot in the bank.
+John usually in the current year is a rich customer in England. 
+</pre>
+
+
+
+<h2>Declarative Sentences</h2>
+
+<p>Declarative sentences are simple sentences, <em>there is/are</em>-sentences, boolean formulas, 
+and composite sentences.</p>
+
+<h3>Simple Sentences</h3>
+<p>Simple sentences have the structure</p>
+
+<p>noun phrase + verb phrase</p>
+
+<pre>
+A customer waits.
+A customer inserts a card.
+A customer gives a card to a clerk.
+A customer gives a clerk a card.
+A customer inserts a card manually into a slot.
+A customer manually inserts a card into a slot.
+</pre>
+
+<h3><em>there is/are</em>-Sentences</h3>
+<p>
+It is possible to create well-formed sentences without a verb, by using the <em>there is/are</em>
+construction.
+</p> 
+
+<p><em>there is</em> + noun phrase</p>
+
+<p><em>there are</em> + noun phrase</p>
+
+<p>
+This construct just introduces the entities described by the noun phrase into the discourse, or  &mdash; if negated  &mdash;  denies their existence. For this reason noun phrases following
+<em>there is/are</em> cannot be and cannot contain definite noun phrases, universally quantified noun phrases, proper names, numbers, arithmetic expressions, strings, sets, or lists. 
+</p>
+
+<pre>
+There is a customer.
+There is some water.
+There are more than 6 clerks.
+There are a cat and 2 dogs.
+There is X.
+There is no man who sleeps.
+*There is a cat in a garden.
+There is a cat that sleeps.
+</pre>
+
+
+<h3>Boolean Formulas</h3>
+<p>
+Boolean formulas also count as sentences. They are built from numbers, arithmetic expressions, proper names and variables
+with the help of the comparison operators =, \=, >, >=, &lt; and =&lt;. As other sentences boolean formulas can be coordinated by <em>and</em>, <em>or</em>, <em>,and</em> and <em>,or</em>. The ACE parser APE does not evaluate boolean formulas.
+</p> 
+
+<pre>
+10 = 4 + 6.
+X \= 2.
+5 > 3.
+X >= 13.4 and X < 20.
+2 ^ (2 ^ 2) = (2 ^ 2) ^ 2.
+</pre>
+
+
+<h3>Composite Sentences</h3>
+
+<p>Composite sentences are recursively built from simple sentences, <em>there is/are</em>-sentences, 
+boolean formulas, and other composite sentences with the help of the predefined constructors:</p>
+
+<ul>
+<li>coordination</li>
+<li>quantification </li>
+<li>global quantification</li>
+<li>subordination</li>
+</ul>
+
+
+<h4>Coordinated Sentences</h4>
+
+<p>Sentences can be coordinated by
+<em>and</em>,
+<em>or</em>,
+<em>,and</em> and
+<em>,or</em>.</p>
+
+<p>Coordination by <em>and</em> and <em>or</em> is governed by the standard binding order of logic, 
+i.e. <em>and</em> binds stronger than <em>or</em>. The coordinators <em>,and</em> and <em>,or</em> 
+can be used to override the standard binding order.</p>
+
+<pre>
+The screen blinks and John waits.
+The screen blinks or John waits.
+The screen blinks or John waits, and Mary enters a card.
+</pre>
+
+
+<h4>Locally Quantified Sentences</h4>
+
+<p>There are existential and universal local quantification. For the treatment of the semantics of quantifiers in ACE, see the
+<a href="ace_interpretationrules.html">ACE interpretation rules</a>.</p>
+
+<p> Local existential quantification is expressed by indefinite determiners like <em>a</em>, or explicitly by <em>there is/are</em>.</p>
+
+<pre>
+There is a card.
+There is some water. 
+There are at least 2 cards.
+John enters a card. 
+John drinks some water.
+</pre>
+
+<p> 
+Local universal quantification is expressed by the determiner <em>every</em>, and its variants. Note that universal quantification can also be expressed by 
+an <em>if ... then</em> construct.</p>
+
+<pre>
+Every man waits. (= If there is a man X then the man X waits.)
+John enters every card. (= If there is a card X then John enters the card X.)
+</pre>
+
+<h4>Globally Quantified Sentences</h4>
+
+<p>There are  existential and universal global quantification in which the 
+quantifiers are moved to sentence initial position.</p>
+
+<p>Global existential quantification is expressed by:</p>
+
+<pre>
+there is ... that ...
+there are ... that ...
+</pre>
+
+<p>Global universal quantification is expressed by:</p>
+
+<pre>
+for every
+for each
+for each of
+for all 
+</pre>
+
+<p>Here are some examples.</p>
+
+<pre>
+There is a code that every clerk enters.
+
+For every code a clerk enters it.
+For each of 3 men there is a bed.
+For all water there is a container.
+</pre>
+
+
+<h4 id="Subordination">Subordination</h4>
+
+
+<p>ACE knows five forms of sentence subordination:</p>
+
+<ul>
+<li>conditional sentences (<em>if-then</em> sentences)</li>
+<li>logical negation</li>
+<li>negation as failure</li>
+<li>modality</li>
+<li>sentence subordination</li>
+</ul>
+
+
+<h5>Conditional Sentences</h5>
+<p>Conditional sentences are built with the help of the <em>if-then</em> construct that subordinates 
+two simple or composite sentences.</p>
+
+<pre>
+If John enters a card then the automated-teller accepts it.
+If John enters a card and he waits then the automated-teller accepts the card or rejects it.
+</pre>
+
+<h5>Logical Negation</h5>
+
+<p>Complete sentences can be negated. For the negation of nouns phrases see 
+<a href="#Noun Phrases">Noun Phrases</a>, and for the negation 
+of verb phrases see <a href="#Verb Phrases">Verb Phrases</a></p>
+
+<p>Negation of sentences is expressed by the fixed phrases <em>it is false that ... </em>,
+or by <em>it is not true that ... </em>. For coordinated sentences the word <em>that</em> has to repeated.
+Note that for backwards compatibility ACE offers also the phrase <em>it is true that ... </em>.</p>
+
+<pre>
+It is false that a screen blinks. 
+It is false that a screen blinks and that John enters a code. 
+</pre>
+
+<h5>Negation as Failure</h5>
+
+<p>Negation as failure can be applied to complete sentences. For negation as failure of verb phrases 
+see <a href="#Verb Phrases">Verb Phrases</a>. </p>
+
+<p>Negation as failure of sentences is expressed by the fixed phrase
+ <em>it is not provable that ... </em>. For coordinated sentences the word <em>that</em> has to repeated.</p>
+
+<pre>
+It is not provable that a screen blinks.
+It is not provable that a screen blinks and that John enters a code.
+</pre>
+
+
+<h5>Modality</h5>
+
+<p>Modality can be used with complete sentences. 
+For the modality of verb phrases see <a href="#Verb Phrases">Verb Phrases</a></p>
+
+<p>Modality of sentences is expressed by the fixed phrases 
+
+<em>it is possible that ... </em>, 
+<em>it is not possible that ... </em>, 
+<em>it is necessary that ... </em>, 
+<em>it is not necessary that ... </em>, 
+<em>it is recommended that ... </em>, 
+<em>it is not recommended that ... </em>, 
+<em>it is admissible that ... </em>,
+<em>it is not admissible that ... </em>. 
+
+For coordinated sentences the word <em>that</em> has to repeated.</p>
+
+<pre>
+It is possible that John waits.
+It is not necessary that John enters a card and that he types a code.
+It is recommended that the surgeon operates the patient.
+It is not admissible that the patient takes his/her own medicine.
+</pre>
+
+<h5>Sentence Subordination</h5>
+
+<p>In sentence subordination a transitive verb takes a complete sentence as an object.</p>
+
+<pre>
+A clerk believes that a customer inserts a card.
+</pre>
+
+<p>If and only if the main sentence and the subordinated sentence have the same subject as in</p>
+
+<pre>
+John wants that John inserts a card.
+</pre>
+
+<p>then sentence subordination can be more concisely expressed as</p>
+
+<pre>
+John wants to insert a card.
+</pre>
+
+<p>Notice that adverbs and prepositional phrases modifying the verb of the main sentence 
+can only occur before the verb of the main sentence as in the example below, but are not allowed between the verb 
+of the main sentence and <em>that</em>, respectively <em>to</em>.</p>
+
+<pre>
+John eagerly in the morning wants to insert a card.
+</pre>
+
+
+<h3>Interrogative Sentences</h3>
+
+<p>ACE allows three forms of interrogative sentences:
+<em>yes/no</em> queries, <em>wh</em>-queries and <em>how much/many</em>-queries. 
+Interrogative sentences must end with a question mark.</p>
+
+<p><em>Yes/No</em> queries can be answered by yes/no.</p>
+
+<pre>
+Does John enter a card?
+Does John not wait?
+Do John and Mary wait in a garden?
+Is the card valid?
+Is the card not valid?
+Is it true that a man waits?
+Is it false that a man waits?
+</pre>
+
+<p>The <em>wh</em>-queries <em>who</em>, <em>whose</em>, <em>what</em>, and <em>which</em> ask for 
+the subject or an object of a sentence, while <em>how</em>, <em>where</em>, and <em>when</em> ask 
+for modifiers of the verb.</p>
+
+<p>Since the query words can often be placed before the verb and after the verb most questions have alternative equivalent formulations.</p>
+
+<pre>
+Who waits?
+Who wait? (= Who waits?)
+Each of who waits?
+Whose dog barks?
+A card of who is valid?
+Who does John not see? (alternatively: John does not see who?)
+Who is John? (alternatively: John is who?)
+What does a man not eat? (alternatively: A man does not eat what?)
+Which customer enters a card and types a code?
+How does John enter a card? (alternatively: John enters a card how?)
+Where does John wait? (alternatively: John waits where?)
+When does John wait? (alternatively: John waits when?)
+There is who? (alternatively: Who is there?)
+There is which man? (alternatively: Which man is there?)
+Where is John? (alternatively: John is who?)
+</pre>
+
+<p>The <em>how much/many</em>-queries ask for the amount of a mass or measurement noun, or for the number of countable nouns. 
+The queries can be used as subjects or objects of a sentence.</p>
+
+<pre>
+How much water boils?
+How many men wait?
+How many men have how many apples?
+John gives how much food to how many children?
+</pre>
+
+
+
+<h3>Imperative Sentences</h3>
+
+<p>ACE supports simple imperative sentences, briefly called commands. 
+A command consists of a noun phrase (the addressee), 
+followed by a comma, followed by a &mdash; possibly negated &mdash; uncoordinated verb phrase. 
+A command must end with an exclamation mark.</p>
+
+<pre>
+John, go to your own bank!
+John and Mary, clean yourselves!
+Every dog, do not bark!
+John's brother, return the book to Mary!
+</pre>
+
+
+<h2>ACE Texts</h2>
+
+<p>An ACE text is a sequence of declarative, interrogative and imperative sentences. 
+All sentences can anaphorically refer to preceding declarative sentences, but not to
+interrogative and imperative sentences.</p>
+
+<pre>
+Mary enters a card into a machine. Its screen blinks or Mary waits.
+
+A man has a car. Does he see the car? John, identify the car!
+</pre>
+
+
+<address>
+2013-07-31
+</address>
+
+</body>
+</html>
