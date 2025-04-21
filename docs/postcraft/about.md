@@ -1,16 +1,24 @@
-# About
+# About namespaces/docs/postcraft
+
+Material that was previously at `https://hyperdata.it/xmlns/` migrated to `https://hyperdata.it/ns/` (redirecting for cool URIs)
+
+Exceptions : mcp, a2a
+
+On server, first check `hyperdata/sites/danny.ayers.name`, if not exist, use `sites/hyperdata-static`
 
 ```sh
-./trans md-to-sparqlstore ~/hyperdata/postcraft/docs/postcraft
-./trans postcraft-statics ~/hyperdata/postcraft/docs/postcraft
-./trans sparqlstore-to-html ~/hyperdata/postcraft/docs/postcraft
-./trans sparqlstore-to-site-indexes ~/hyperdata/postcraft/docs/postcraft
+cd ~/hyperdata/transmissions # my local path
+./del2.sh
+./trans md-to-sparqlstore ~/hyperdata/namespaces/docs/postcraft
+./trans postcraft-statics ~/hyperdata/namespaces/docs/postcraft #
+./trans sparqlstore-to-html ~/hyperdata/namespaces/docs/postcraft
+./trans sparqlstore-to-site-indexes ~/hyperdata/namespaces/docs/postcraft
 ```
 
 ## Default Postcraft Structure
 
 - about.md
-- manifest.ttl
+- app.ttl
 - content
   - media
   - raw
@@ -31,3 +39,5 @@
 cd ~/sites/strandz.it/postcraft
 tree -L 2 --filesfirst
 ```
+
+#:todo purl.org/ibis redirect to hyperdata.it/ns/
