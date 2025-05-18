@@ -1,0 +1,28 @@
+{
+  "name": "hyperdata-namespaces",
+  "version": "0.1.0",
+  "description": "custom vocabs, specs etc.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node start-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danja/namespaces.git"
+  },
+  "keywords": [],
+  "author": "Danny Ayers",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/danja/namespaces/issues"
+  },
+  "homepage": "https://github.com/danja/namespaces#readme",
+  "dependencies": {
+    "hyperdata-wstore": "^0.1.1"
+  }
+}
