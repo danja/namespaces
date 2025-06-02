@@ -75,7 +75,7 @@
 ### Example Instance ###
 tilt:TransformerFocus a :TiltConfiguration ;
   rdfs:label "Transformer Architecture Focus" ;
-  :hasComponent tilt:EmbSim1, tilt:GraphPath1, tilt:Keywords1 .
+  :hasComponent tilt:EmbSim1, tilt:GraphPath1, tilt:Keywords 1 .
 
 tilt:EmbSim1 a :EmbeddingSimilarity ;
   :targetModel corpuscle:text-embedding-ada-002 ;
